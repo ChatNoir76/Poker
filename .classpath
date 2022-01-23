@@ -6,5 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/chatnoir/Modèles/Outil02_FormulaireIHM"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
