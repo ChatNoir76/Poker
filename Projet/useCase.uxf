@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
-  <zoom_level>8</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>144</x>
-      <y>16</y>
-      <w>528</w>
-      <h>632</h>
+      <x>224</x>
+      <y>42</y>
+      <w>462</w>
+      <h>553</h>
     </coordinates>
     <panel_attributes>Jeu Poker
 halign=left</panel_attributes>
@@ -15,10 +15,10 @@ halign=left</panel_attributes>
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>64</x>
-      <y>192</y>
-      <w>64</w>
-      <h>80</h>
+      <x>154</x>
+      <y>196</y>
+      <w>56</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Donneur</panel_attributes>
     <additional_attributes/>
@@ -26,10 +26,10 @@ halign=left</panel_attributes>
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>72</x>
-      <y>376</y>
-      <w>48</w>
-      <h>80</h>
+      <x>161</x>
+      <y>357</y>
+      <w>42</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Joueur</panel_attributes>
     <additional_attributes/>
@@ -37,10 +37,10 @@ halign=left</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>88</x>
-      <y>264</y>
-      <w>24</w>
-      <h>112</h>
+      <x>175</x>
+      <y>259</y>
+      <w>21</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
@@ -48,10 +48,10 @@ halign=left</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>384</x>
-      <y>24</y>
-      <w>96</w>
-      <h>32</h>
+      <x>434</x>
+      <y>49</y>
+      <w>84</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>Donner 
 River</panel_attributes>
@@ -60,10 +60,10 @@ River</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>224</x>
-      <y>184</y>
-      <w>96</w>
-      <h>32</h>
+      <x>294</x>
+      <y>189</y>
+      <w>84</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>Donner
 Flop</panel_attributes>
@@ -72,10 +72,10 @@ Flop</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>328</x>
-      <y>104</y>
-      <w>96</w>
-      <h>32</h>
+      <x>385</x>
+      <y>119</y>
+      <w>84</w>
+      <h>28</h>
     </coordinates>
     <panel_attributes>Donner
 Turn</panel_attributes>
@@ -84,10 +84,10 @@ Turn</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>192</y>
-      <w>128</w>
-      <h>40</h>
+      <x>196</x>
+      <y>196</y>
+      <w>112</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>140.0;10.0;10.0;30.0</additional_attributes>
@@ -95,10 +95,10 @@ Turn</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>112</y>
-      <w>232</w>
-      <h>120</h>
+      <x>196</x>
+      <y>126</y>
+      <w>203</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>270.0;10.0;10.0;130.0</additional_attributes>
@@ -106,10 +106,10 @@ Turn</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>32</y>
-      <w>288</w>
-      <h>200</h>
+      <x>196</x>
+      <y>56</y>
+      <w>252</w>
+      <h>175</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>340.0;10.0;10.0;230.0</additional_attributes>
@@ -117,10 +117,10 @@ Turn</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>232</x>
-      <y>232</y>
-      <w>104</w>
-      <h>48</h>
+      <x>301</x>
+      <y>231</y>
+      <w>91</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>Recommencer
 Partie</panel_attributes>
@@ -129,10 +129,10 @@ Partie</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>208</y>
-      <w>136</w>
-      <h>64</h>
+      <x>196</x>
+      <y>210</y>
+      <w>119</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;150.0;60.0</additional_attributes>
@@ -140,10 +140,10 @@ Partie</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>240</x>
-      <y>400</y>
-      <w>104</w>
-      <h>40</h>
+      <x>308</x>
+      <y>378</y>
+      <w>91</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Faire
 Tapis</panel_attributes>
@@ -152,10 +152,10 @@ Tapis</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>232</x>
-      <y>344</y>
-      <w>104</w>
-      <h>40</h>
+      <x>301</x>
+      <y>329</y>
+      <w>91</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Miser
 Double blind</panel_attributes>
@@ -164,10 +164,10 @@ Double blind</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>448</x>
-      <y>456</y>
-      <w>104</w>
-      <h>40</h>
+      <x>490</x>
+      <y>427</y>
+      <w>91</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Miser
 Jetons</panel_attributes>
@@ -176,10 +176,10 @@ Jetons</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>296</y>
-      <w>176</w>
-      <h>176</h>
+      <x>385</x>
+      <y>287</y>
+      <w>154</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;includes&gt;&gt;</panel_attributes>
@@ -188,10 +188,10 @@ Jetons</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>360</y>
-      <w>160</w>
-      <h>112</h>
+      <x>385</x>
+      <y>343</y>
+      <w>140</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;includes&gt;&gt;</panel_attributes>
@@ -200,10 +200,10 @@ Jetons</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>232</x>
-      <y>288</y>
-      <w>104</w>
-      <h>40</h>
+      <x>301</x>
+      <y>280</y>
+      <w>91</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Miser
 Simple blind</panel_attributes>
@@ -212,10 +212,10 @@ Simple blind</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>240</x>
-      <y>504</y>
-      <w>104</w>
-      <h>40</h>
+      <x>308</x>
+      <y>469</y>
+      <w>91</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Abandonner
 Manche</panel_attributes>
@@ -224,10 +224,10 @@ Manche</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>240</x>
-      <y>560</y>
-      <w>104</w>
-      <h>40</h>
+      <x>308</x>
+      <y>518</y>
+      <w>91</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>Récupérer
 Pot</panel_attributes>
@@ -236,10 +236,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
-      <y>408</y>
-      <w>136</w>
-      <h>72</h>
+      <x>392</x>
+      <y>385</y>
+      <w>119</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=.&gt;
 &lt;&lt;includes&gt;&gt;</panel_attributes>
@@ -248,10 +248,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>304</y>
-      <w>136</w>
-      <h>120</h>
+      <x>196</x>
+      <y>294</y>
+      <w>119</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;130.0;150.0;10.0</additional_attributes>
@@ -259,10 +259,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>352</y>
-      <w>136</w>
-      <h>72</h>
+      <x>196</x>
+      <y>336</y>
+      <w>119</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;70.0;150.0;10.0</additional_attributes>
@@ -270,10 +270,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>392</y>
-      <w>144</w>
-      <h>40</h>
+      <x>196</x>
+      <y>371</y>
+      <w>126</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;20.0;160.0;30.0</additional_attributes>
@@ -281,10 +281,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>400</y>
-      <w>144</w>
-      <h>136</h>
+      <x>196</x>
+      <y>378</y>
+      <w>126</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;160.0;150.0</additional_attributes>
@@ -292,10 +292,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>400</y>
-      <w>144</w>
-      <h>192</h>
+      <x>196</x>
+      <y>378</y>
+      <w>126</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;160.0;220.0</additional_attributes>
@@ -303,10 +303,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>400</y>
-      <w>352</w>
-      <h>96</h>
+      <x>196</x>
+      <y>378</y>
+      <w>308</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;10.0;170.0;90.0;420.0;100.0</additional_attributes>
@@ -314,10 +314,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>304</x>
-      <y>128</y>
-      <w>104</w>
-      <h>80</h>
+      <x>364</x>
+      <y>140</y>
+      <w>91</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes>
@@ -326,10 +326,10 @@ Pot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>392</x>
-      <y>48</y>
-      <w>96</w>
-      <h>72</h>
+      <x>441</x>
+      <y>70</y>
+      <w>84</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 &lt;&lt;extends&gt;&gt;</panel_attributes>
