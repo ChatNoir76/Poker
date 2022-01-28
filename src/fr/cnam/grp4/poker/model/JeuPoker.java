@@ -1,6 +1,12 @@
 package fr.cnam.grp4.poker.model;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
+import fr.cnam.grp4.poker.observable.JeuPokerObservableApp;
+
 public class JeuPoker {
+	private JeuPokerObservableApp obsApp;
 	/**
 	 * Contient les 5 cartes de la manche
 	 * cartes 0 à 2: Flop
@@ -11,7 +17,7 @@ public class JeuPoker {
 	/**
 	 * Contient les joueurs de la partie
 	 */
-	private Joueur[] joueur;
+	private ArrayList<Joueur> joueurs;
 	/**
 	 * Le pot qui contient le cumul de toutes les mises de jetons d'une manche
 	 */
@@ -22,12 +28,27 @@ public class JeuPoker {
 	 */
 	private int blind;
 	
-	public Joueur[] getJoueur() {
-		return joueur;
+	public JeuPokerObservableApp getObsApp() {
+		return obsApp;
 	}
 
-	public void setJoueur(Joueur[] joueur) {
-		this.joueur = joueur;
+	public JeuPoker() {
+		this.obsApp = new JeuPokerObservableApp();
+		this.joueurs = new ArrayList<Joueur>();
+	}
+	
+	public void testObservable() {
+		System.out.println("fx testObservable");
+		this.obsApp.notifyObservers(this);
+	}
+	
+	public Joueur getJoueur(String speudo) {
+		Optional<Joueur> joueur = this.joueurs.stream().filter(j -> j.getNom().equals(speudo)).findFirst();
+		return joueur.orElseThrow();
+	}
+
+	public void ajouteJoueur(Joueur joueur) {
+		this.joueurs.add(joueur);
 	}
 
 	public int getPot() {
