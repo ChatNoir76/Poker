@@ -4,7 +4,7 @@ public class Carte extends AbstractCarte {
 	/**
 	 * Détermine la couleur de la carte Pique, Trèfle, Carreau, Coeur
 	 */
-	private String couleur;
+	private Couleur couleur;
 	/**
 	 * Valeur de la carte de 1 (As) à 10
 	 */
@@ -40,7 +40,7 @@ public class Carte extends AbstractCarte {
 		this.lienImageFace = lienImageFace;
 	}
 
-	public void setCouleur(String couleur) {
+	public void setCouleur(Couleur couleur) {
 		this.couleur = couleur;
 	}
 

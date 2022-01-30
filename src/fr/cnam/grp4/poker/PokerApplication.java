@@ -1,5 +1,6 @@
 package fr.cnam.grp4.poker;
 
+import fr.cnam.grp4.poker.model.Carte;
 import fr.cnam.grp4.poker.model.JeuPoker;
 import fr.cnam.grp4.poker.model.Joueur;
 import fr.cnam.grp4.poker.view.IHMJoueur;
@@ -12,9 +13,10 @@ public class PokerApplication implements IPokerApplication {
 		IHMJoueur ihm1 = new IHMJoueur("David");
 		PokerApplication.controleur().ajouteJoueur(ihm1);
 		
-		//PokerApplication.controleur().getJeuPoker().testObservable();
+		IHMJoueur ihm2 = new IHMJoueur("Goliath");
+		PokerApplication.controleur().ajouteJoueur(ihm2);
 		
-		System.out.println("fin du programme");
+
 	}
 	/**
 	 * Instance unique de l'application
@@ -40,38 +42,51 @@ public class PokerApplication implements IPokerApplication {
 	 * Jeu de poker
 	 */
 	private JeuPoker jeuPoker;
-	
+	/**
+	 * 
+	 */
 	private PokerApplication() {
 		this.jeuPoker = new JeuPoker();
+		Carte[] cartes = new Carte[3];
+		cartes[0] = new Carte();
+		cartes[1] = new Carte();
+		cartes[2] = new Carte();
+		this.jeuPoker.setFlop(cartes);
+		this.jeuPoker.setTurn(new Carte());
+		this.jeuPoker.setRiver(new Carte());
 	}
-	
+	/**
+	 * 
+	 * @param ihm
+	 */
+	@SuppressWarnings("deprecation")
 	public void ajouteJoueur(IHMJoueur ihm) {
-		this.jeuPoker.getObsApp().addObserver(ihm);
+		this.jeuPoker.addObserver(ihm);
 		this.jeuPoker.ajouteJoueur(new Joueur(ihm.getPseudo()));
 		ihm.afficher();
 	}
-
 	@Override
 	public void definirBlind(int nbjeton) {
 		this.jeuPoker.setBlind(nbjeton);
+		this.jeuPoker.notifyIHM();
 	}
-
 	@Override
 	public void voirFlop() {
-		// TODO Auto-generated method stub
-		
+		for(Carte carte: this.jeuPoker.getFlop()) {
+			carte.setVisible(true);
+		}
+		this.jeuPoker.notifyIHM();
 	}
-
 	@Override
 	public void voirTurn() {
-		// TODO Auto-generated method stub
-		
+		this.jeuPoker.getTurn().setVisible(true);
+		this.jeuPoker.notifyIHM();
 	}
 
 	@Override
 	public void voirRiver() {
-		// TODO Auto-generated method stub
-		
+		this.jeuPoker.getRiver().setVisible(true);
+		this.jeuPoker.notifyIHM();
 	}
 	@Override
 	public void recommencerPartie(String joueur) {
@@ -79,31 +94,27 @@ public class PokerApplication implements IPokerApplication {
 		
 	}
 	@Override
-	public void miserSimpleBlind(String joueur, int nbjetons) {
-		// TODO Auto-generated method stub
-		
+	public void miserSimpleBlind(String joueur) {
+		this.miserJetons(joueur, this.jeuPoker.getBlind());
 	}
 	@Override
-	public void miserDoubleBlind(String joueur, int nbjetons) {
-		// TODO Auto-generated method stub
-		
+	public void miserDoubleBlind(String joueur) {
+		this.miserJetons(joueur, this.jeuPoker.getBlind() * 2);
 	}
 	@Override
 	public void miserJetons(String joueur, int nbjetons) {
 		Joueur j = this.jeuPoker.getJoueur(joueur);
 		System.out.println("Le joueur " + j.getNom() + " a misé " + nbjetons + " jeton(s)");
-		
+		this.jeuPoker.notifyIHM();
 	}
 	@Override
-	public void faireTapis(String joueur, int nbjetons) {
+	public void faireTapis(String joueur) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void passer(String joueur) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Le joueur " + joueur + " a passé son tour");
+		this.jeuPoker.notifyIHM();
 	}
-	
-	
 }
