@@ -28,8 +28,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>684</x>
-      <y>360</y>
+      <x>726</x>
+      <y>372</y>
       <w>126</w>
       <h>90</h>
     </coordinates>
@@ -48,8 +48,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>288</y>
+      <x>42</x>
+      <y>300</y>
       <w>126</w>
       <h>72</h>
     </coordinates>
@@ -64,8 +64,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>660</x>
-      <y>228</y>
+      <x>702</x>
+      <y>240</y>
       <w>168</w>
       <h>84</h>
     </coordinates>
@@ -82,8 +82,8 @@ group=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>792</x>
-      <y>198</y>
+      <x>834</x>
+      <y>210</y>
       <w>72</w>
       <h>72</h>
     </coordinates>
@@ -94,8 +94,8 @@ group=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>468</x>
-      <y>258</y>
+      <x>510</x>
+      <y>270</y>
       <w>126</w>
       <h>72</h>
     </coordinates>
@@ -111,8 +111,8 @@ group=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>738</x>
-      <y>306</y>
+      <x>780</x>
+      <y>318</y>
       <w>66</w>
       <h>66</h>
     </coordinates>
@@ -124,8 +124,8 @@ distributeur</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>474</x>
-      <y>438</y>
+      <x>516</x>
+      <y>450</y>
       <w>108</w>
       <h>108</h>
     </coordinates>
@@ -143,8 +143,8 @@ distributeur</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>492</y>
+      <x>618</x>
+      <y>504</y>
       <w>120</w>
       <h>18</h>
     </coordinates>
@@ -154,8 +154,8 @@ distributeur</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>522</x>
-      <y>324</y>
+      <x>564</x>
+      <y>336</y>
       <w>18</w>
       <h>132</h>
     </coordinates>
@@ -165,8 +165,8 @@ distributeur</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>588</x>
-      <y>270</y>
+      <x>630</x>
+      <y>282</y>
       <w>84</w>
       <h>24</h>
     </coordinates>
@@ -177,8 +177,8 @@ sabot</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>78</x>
-      <y>132</y>
+      <x>120</x>
+      <y>144</y>
       <w>72</w>
       <h>48</h>
     </coordinates>
@@ -190,8 +190,8 @@ sabot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>60</x>
-      <y>180</y>
+      <x>102</x>
+      <y>192</y>
       <w>66</w>
       <h>120</h>
     </coordinates>
@@ -201,8 +201,8 @@ sabot</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>282</x>
-      <y>60</y>
+      <x>324</x>
+      <y>72</y>
       <w>162</w>
       <h>48</h>
     </coordinates>
@@ -219,8 +219,8 @@ sabot</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>240</x>
-      <y>144</y>
+      <x>282</x>
+      <y>156</y>
       <w>162</w>
       <h>48</h>
     </coordinates>
@@ -236,8 +236,8 @@ sabot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>126</x>
-      <y>78</y>
+      <x>168</x>
+      <y>90</y>
       <w>168</w>
       <h>72</h>
     </coordinates>
@@ -247,8 +247,8 @@ sabot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>312</x>
-      <y>102</y>
+      <x>354</x>
+      <y>114</y>
       <w>60</w>
       <h>54</h>
     </coordinates>
@@ -258,8 +258,8 @@ sabot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>318</x>
-      <y>186</y>
+      <x>360</x>
+      <y>198</y>
       <w>18</w>
       <h>78</h>
     </coordinates>
@@ -269,8 +269,8 @@ sabot</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>702</x>
-      <y>36</y>
+      <x>744</x>
+      <y>48</y>
       <w>126</w>
       <h>66</h>
     </coordinates>
@@ -289,8 +289,8 @@ sabot</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>456</x>
-      <y>36</y>
+      <x>498</x>
+      <y>48</y>
       <w>180</w>
       <h>102</h>
     </coordinates>
@@ -314,8 +314,8 @@ sabot</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>684</x>
-      <y>474</y>
+      <x>726</x>
+      <y>486</y>
       <w>126</w>
       <h>48</h>
     </coordinates>
@@ -330,8 +330,8 @@ sabot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>738</x>
-      <y>444</y>
+      <x>780</x>
+      <y>456</y>
       <w>18</w>
       <h>42</h>
     </coordinates>
@@ -341,22 +341,22 @@ sabot</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>228</x>
-      <y>258</y>
-      <w>192</w>
+      <x>264</x>
+      <y>270</y>
+      <w>204</w>
       <h>168</h>
     </coordinates>
     <panel_attributes>IPokerApplication
 --
-/+recommencerPartie(Joueur joueur): void/
+/+recommencerPartie(String joueur): void/
 /+definirBlind(int nbJeton): void/
-/+miserSimpleBlind(Joueur joueur): void/
-/+miserDoubleBlind(Joueur joueur): void/
-/+miserJetons(Joueur joueur): void/
-/+faireTapis(Joueur joueur): void/
-/+passer(Joueur joueur): void/
-/+abandonner(Joueur joueur): void/
-/+prendrePot(Joueur joueur): void/
+/+miserSimpleBlind(String joueur): void/
+/+miserDoubleBlind(String joueur): void/
+/+miserJetons(String joueur, int nbJeton): void/
+/+faireTapis(String joueur): void/
+/+passer(String joueur): void/
+/+abandonner(String joueur): void/
+/+prendrePot(String joueur): void/
 /+voirFlop(): void/
 /+voirTurn(): void/
 /+voirRiver(): void/
@@ -366,8 +366,8 @@ sabot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>402</x>
-      <y>276</y>
+      <x>444</x>
+      <y>288</y>
       <w>78</w>
       <h>18</h>
     </coordinates>
@@ -377,8 +377,8 @@ sabot</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>522</x>
-      <y>132</y>
+      <x>564</x>
+      <y>144</y>
       <w>54</w>
       <h>138</h>
     </coordinates>
@@ -389,8 +389,8 @@ jeuPoker</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
-      <y>78</y>
+      <x>672</x>
+      <y>90</y>
       <w>84</w>
       <h>24</h>
     </coordinates>
@@ -401,8 +401,8 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>120</x>
-      <y>324</y>
+      <x>162</x>
+      <y>336</y>
       <w>120</w>
       <h>24</h>
     </coordinates>
