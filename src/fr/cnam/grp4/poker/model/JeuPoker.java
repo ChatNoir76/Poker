@@ -1,12 +1,18 @@
 package fr.cnam.grp4.poker.model;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Optional;
 
-import fr.cnam.grp4.poker.observable.JeuPokerObservableApp;
-
-public class JeuPoker {
-	private JeuPokerObservableApp obsApp;
+@SuppressWarnings("deprecation")
+public class JeuPoker extends Observable{
+	
+	private final static int[] FLOP_INDEX = {0, 1, 2};
+	private final static int TURN_INDEX = 3;
+	private final static int RIVER_INDEX = 4;
+	private final static int INDEX_LIST_SIZE = 5;
+	
+	//private JeuPokerObservableApp obsApp;
 	/**
 	 * Contient les 5 cartes de la manche
 	 * cartes 0 à 2: Flop
@@ -28,18 +34,20 @@ public class JeuPoker {
 	 */
 	private int blind;
 	
-	public JeuPokerObservableApp getObsApp() {
-		return obsApp;
+	private JeuPoker(int blind) {
+		this.cartes = new Carte[INDEX_LIST_SIZE];
+		this.joueurs = new ArrayList<Joueur>();
+		this.pot = 0;
+		this.blind = blind;
 	}
 
 	public JeuPoker() {
-		this.obsApp = new JeuPokerObservableApp();
-		this.joueurs = new ArrayList<Joueur>();
+		this(5);
 	}
 	
-	public void testObservable() {
-		System.out.println("fx testObservable");
-		this.obsApp.notifyObservers(this);
+	public void notifyIHM() {
+		this.setChanged();
+		this.notifyObservers(this);
 	}
 	
 	public Joueur getJoueur(String speudo) {
@@ -66,21 +74,58 @@ public class JeuPoker {
 	public void setBlind(int blind) {
 		this.blind = blind;
 	}
-
+	
 	public Carte[] getCartes() {
-		return cartes;
+		return this.cartes;
 	}
-
+	/**
+	 * Récupère les trois cartes constituant le flop
+	 * @return Carte[3]
+	 */
+	public Carte[] getFlop() {
+		Carte[] liste = new Carte[FLOP_INDEX.length];
+		for(int index: FLOP_INDEX) {
+			liste[index] = this.cartes[index];
+		}
+		return liste;
+	}
+	/**
+	 * Récupère la carte du turn
+	 * @return Carte Turn
+	 */
+	public Carte getTurn() {
+		return this.cartes[TURN_INDEX];
+	}
+	/**
+	 * Récupère la carte du river
+	 * @return Carte River
+	 */
+	public Carte getRiver() {
+		return this.cartes[RIVER_INDEX];
+	}
+	/**
+	 * Définie les trois cartes du flop
+	 * @param cartes trois Carte
+	 */
 	public void setFlop(Carte[] cartes) {
-		
+		if(cartes.length == FLOP_INDEX.length) {
+			for(int index: FLOP_INDEX) {
+				this.cartes[index] = cartes[index];
+			}
+		}
 	}
-	
+	/**
+	 * Définie la carte du turn
+	 * @param carte Carte du Turn
+	 */
 	public void setTurn(Carte carte) {
-			
+		this.cartes[TURN_INDEX] = carte;
 	}
-
+	/**
+	 * Définie la carte du river
+	 * @param carte Carte du River
+	 */
 	public void setRiver(Carte carte) {
-		
+		this.cartes[RIVER_INDEX] = carte;
 	}
-	
 }
