@@ -26,6 +26,10 @@ public class Joueur {
 	 * si oui, il pourra avoir les commandes du plateau
 	 */
 	private boolean donneur;
+	/**
+	 * savoir si le joueur à abandonné
+	 */
+	private boolean abandon;
 	
 	private Joueur(String nom, int jetons, boolean donneur) {
 		this.nom = nom;
@@ -33,6 +37,7 @@ public class Joueur {
 		this.jetons = jetons;
 		this.miseManche = 0;
 		this.donneur = donneur;
+		this.abandon = false;
 	}
 	/**
 	 * Création d'un joueur
@@ -127,4 +132,19 @@ public class Joueur {
 	public void setDonneur(boolean donneur) {
 		this.donneur = donneur;
 	}
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isAbandon() {
+		return abandon;
+	}
+	/**
+	 * 
+	 * @param abandon
+	 */
+	public void setAbandon(boolean abandon) {
+		this.abandon = abandon;
+	}
+	
 }

@@ -12,5 +12,5 @@ public interface IPokerApplication {
 	public void voirFlop();
 	public void voirTurn();
 	public void voirRiver();
-	
+	public void abandonner(String joueur);
 }

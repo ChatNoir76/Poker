@@ -18,7 +18,7 @@ public class PokerApplication implements IPokerApplication {
 		IHMJoueur ihm2 = new IHMJoueur("Goliath");
 		PokerApplication.controleur().ajouteJoueur(ihm2);
 		
-		PokerApplication.controleur().distributionCartes();
+		PokerApplication.controleur().startApplication();
 		
 //		int cursor = 0;
 //		boolean isNull = false;
@@ -75,7 +75,11 @@ public class PokerApplication implements IPokerApplication {
 		
 	}
 	
-	public void distributionCartes() {
+	public void startApplication() {
+		distributionCartes();
+	}
+	
+	private void distributionCartes() {
 		//distribution du flop
 		Carte[] cartes = new Carte[3];
 		cartes[0] = CarteFactory.eInstance().prendreCarte();
@@ -98,7 +102,7 @@ public class PokerApplication implements IPokerApplication {
 		this.jeuPoker.notifyIHM();
 	}
 	
-	public void recuperationCartes() {
+	private void recuperationCartes() {
 		//récupération du flop
 		CarteFactory.eInstance().remettreCartes(this.jeuPoker.getFlop());
 		//récupération du turn
@@ -119,6 +123,7 @@ public class PokerApplication implements IPokerApplication {
 	public void ajouteJoueur(IHMJoueur ihm) {
 		this.jeuPoker.addObserver(ihm);
 		this.jeuPoker.ajouteJoueur(new Joueur(ihm.getPseudo()));
+		this.jeuPoker.ajouteMessage("Nouveau joueur: " + ihm.getPseudo());
 		ihm.afficher();
 	}
 	@Override
@@ -128,6 +133,7 @@ public class PokerApplication implements IPokerApplication {
 	}
 	@Override
 	public void voirFlop() {
+		this.jeuPoker.ajouteMessage("Le Flop devient visible");
 		for(Carte carte: this.jeuPoker.getFlop()) {
 			carte.setVisible(true);
 		}
@@ -135,18 +141,20 @@ public class PokerApplication implements IPokerApplication {
 	}
 	@Override
 	public void voirTurn() {
+		this.jeuPoker.ajouteMessage("Le Turn devient visible");
 		this.jeuPoker.getTurn().setVisible(true);
 		this.jeuPoker.notifyIHM();
 	}
 
 	@Override
 	public void voirRiver() {
+		this.jeuPoker.ajouteMessage("Le River devient visible");
 		this.jeuPoker.getRiver().setVisible(true);
 		this.jeuPoker.notifyIHM();
 	}
 	@Override
 	public void recommencerPartie(String joueur) {
-		// TODO Auto-generated method stub
+		recuperationCartes();
 		
 	}
 	@Override
@@ -160,7 +168,7 @@ public class PokerApplication implements IPokerApplication {
 	@Override
 	public void miserJetons(String joueur, int nbjetons) {
 		Joueur j = this.jeuPoker.getJoueur(joueur);
-		System.out.println("Le joueur " + j.getNom() + " a misé " + nbjetons + " jeton(s)");
+		this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " a misé " + nbjetons + " jeton(s)");
 		this.jeuPoker.notifyIHM();
 	}
 	@Override
@@ -170,7 +178,14 @@ public class PokerApplication implements IPokerApplication {
 	}
 	@Override
 	public void passer(String joueur) {
-		System.out.println("Le joueur " + joueur + " a passé son tour");
+		this.jeuPoker.ajouteMessage("Le joueur " + joueur + " a passé son tour");
+		this.jeuPoker.notifyIHM();
+	}
+	@Override
+	public void abandonner(String joueur) {
+		Joueur j = this.jeuPoker.getJoueur(joueur);
+		j.setAbandon(true);
+		this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " vient d'abandonner");
 		this.jeuPoker.notifyIHM();
 	}
 }

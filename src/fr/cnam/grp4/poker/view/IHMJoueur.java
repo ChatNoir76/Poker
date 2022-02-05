@@ -30,6 +30,7 @@ public class IHMJoueur implements Observer, FormulaireInt {
 	public static final String[] ALL_DONNEUR_BUTTON = {BT_FLOP, BT_TURN, BT_RIVER, BT_RECOMMENCER};
 	
 	public static final String TXT_MISER = "TXT_MISER";
+	public static final String TXT_INFORMATION = "TXT_InfoG";
 	
 	private Formulaire vue;
 	private String pseudo;
@@ -46,20 +47,32 @@ public class IHMJoueur implements Observer, FormulaireInt {
 	public IHMJoueur(String pseudo) {
 		this.pseudo = pseudo;
 		this.joue = true;
-		this.vue = new Formulaire(this.pseudo, this, 900, 350);
+		this.vue = new Formulaire(this.pseudo, this, 1000, 450);
+		this.vue.setPosition(5, 5);
+		this.vue.addLabel("Action du JOUEUR");
 		this.vue.addButton(BT_MISER_SIMPLE, "Miser Simple Blind");
 		this.vue.addButton(BT_MISER_DOUBLE, "Miser Double Blind");
+		int x1 = this.vue.getXCour();
+		int y1 = this.vue.getYCour();
 		this.vue.addButton(BT_MISER, "Miser");
-		this.vue.addText(TXT_MISER, "Valeur à miser", true, "0");
 		this.vue.addButton(BT_TAPIS, "Tapis");
 		this.vue.addButton(BT_PASSER, "Passer");
 		this.vue.addButton(BT_ABANDONNER, "Abandonner");
 		this.vue.addButton(BT_PRENDREPOT, "Prendre le pot");
 		
+		int x2 = this.vue.getXCour();
+		int y2 = this.vue.getYCour();
+		this.vue.setPosition(x2, y2 + 50);
+		this.vue.addLabel("Action du DONNEUR");
 		this.vue.addButton(BT_FLOP, "Distribuer Flop");
 		this.vue.addButton(BT_TURN, "Distribuer Turn");
 		this.vue.addButton(BT_RIVER, "Distribuer River");
 		this.vue.addButton(BT_RECOMMENCER, "Recommencer Partie");
+	
+		this.vue.setPosition(640, 10);
+		this.vue.addZoneText(TXT_INFORMATION, "Info du jeu", false, "", 300, 350);
+		this.vue.setPosition(x1 + 55, y1);
+		this.vue.addText(TXT_MISER, "", true, "0");
 		
 		this.carte1 = this.vue.addImage("image joueur 1", 250, 10, 71, 96, "");
 		this.carte2 = this.vue.addImage("image joueur 2", 326, 10, 71, 96, "");
@@ -84,35 +97,32 @@ public class IHMJoueur implements Observer, FormulaireInt {
 		this.vue.afficher();
 	}
 	/**
-	 * Le joueur ne peut plus jouer
-	 * Il est éliminé
-	 */
-	public void sortirJoueur() {
-		this.joue = false;
-	}
-	/**
 	 * donner ou retire la possibilité au joueur de jouer
 	 * @param enabled false pour bloquer les boutons de l'ihm
 	 */
-	public void setEnabledOtherFunction(boolean enabled) {
-		for(String button: ALL_OTHER_BUTTON) {
-			if(enabled) {
-				this.vue.activer(button);
-			} else {
-				this.vue.desactiver(button);
+	private void peutUtiliserFonctionJeu(boolean enabled) {
+		if(joue) {
+			for(String button: ALL_OTHER_BUTTON) {
+				if(enabled) {
+					this.vue.activer(button);
+				} else {
+					this.vue.desactiver(button);
+				}
 			}
 		}
 	}
 	/**
-	 * donner ou retire la possibilité au joueur d'utiliser les fonctions du donneur
+	 * donne ou retire la possibilité au joueur d'utiliser les fonctions du donneur
 	 * @param enabled false pour bloquer les boutons de l'ihm
 	 */
-	public void setEnabledDonneurFunction(boolean enabled) {
-		for(String button: ALL_DONNEUR_BUTTON) {
-			if(enabled) {
-				this.vue.activer(button);
-			} else {
-				this.vue.desactiver(button);
+	private void peutUtiliserFonctionDonneur(boolean enabled) {
+		if(joue) {
+			for(String button: ALL_DONNEUR_BUTTON) {
+				if(enabled) {
+					this.vue.activer(button);
+				} else {
+					this.vue.desactiver(button);
+				}
 			}
 		}
 	}
@@ -126,9 +136,27 @@ public class IHMJoueur implements Observer, FormulaireInt {
 		}
 	}
 	
+	private void afficheMessages(String[] messages) {
+		StringBuilder str = new StringBuilder();
+		for(String message: messages) {
+			str.append(message).append('\n');
+		}
+		this.vue.setValeurChamp(TXT_INFORMATION, str.toString());
+	}
+	
 	private void traitementInfoJeu(JeuPoker jeu) {
-		//affichage des cartes du joueur
+		
+		afficheMessages(jeu.getMessages());
+		
 		Joueur me = jeu.getJoueur(pseudo);
+		//si le joueur a abandonné, il ne peux plus jouer
+		if(me.isAbandon() && this.joue == true) {
+			peutUtiliserFonctionJeu(false);
+			peutUtiliserFonctionDonneur(false);
+			this.joue = false;
+		}
+		
+		//affichage des cartes du joueur
 		this.vue.setImage(carte1, me.getCartes()[0].getLienFace());
 		this.vue.setImage(carte2, me.getCartes()[1].getLienFace());
 		
@@ -163,6 +191,12 @@ public class IHMJoueur implements Observer, FormulaireInt {
 				break;
 			case BT_RIVER:
 				PokerApplication.eInstance().voirRiver();
+				break;
+			case BT_ABANDONNER:
+				PokerApplication.eInstance().abandonner(this.pseudo);
+				break;
+			case BT_PASSER:
+				PokerApplication.eInstance().passer(this.pseudo);
 				break;
 			default:
 				break;

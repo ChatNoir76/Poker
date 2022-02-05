@@ -33,11 +33,25 @@ public class JeuPoker extends Observable{
 	 */
 	private int blind;
 	
+	private ArrayList<String> messages;
+	
 	private JeuPoker(int blind) {
+		this.messages = new ArrayList<String>();
 		this.cartes = new Carte[INDEX_LIST_SIZE];
 		this.joueurs = new ArrayList<Joueur>();
 		this.pot = 0;
 		this.blind = blind;
+		
+		ajouteMessage("Bonjour à tous et bienvenue");
+	}
+	
+	public String[] getMessages() {
+		return this.messages.toArray(String[]::new);
+	}
+	
+	public void ajouteMessage(String message) {
+		System.out.println(message);
+		this.messages.add(0, message);
 	}
 
 	public JeuPoker() {
