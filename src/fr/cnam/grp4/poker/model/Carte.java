@@ -8,7 +8,7 @@ public class Carte extends AbstractCarte {
 	/**
 	 * Valeur de la carte de 1 (As) à 10
 	 */
-	private int Valeur;
+	private int valeur;
 	/**
 	 * Nom de la carte
 	 * Soit ça correspond à la valeur, soit roi, valet, dame, as
@@ -24,62 +24,46 @@ public class Carte extends AbstractCarte {
 	 */
 	private String lienImageFace;
 	
-	public boolean isVisible() {
-		return visible;
+	public Carte(Couleur couleur, int valeur, String nom, String lienImageFace) {
+		this.couleur = couleur;
+		this.valeur = valeur;
+		this.nom = nom;
+		this.visible = false;
+		this.lienImageFace = lienImageFace;
 	}
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 
-	public String getLienImageFace() {
-		return lienImageFace;
-	}
-
-	public void setLienImageFace(String lienImageFace) {
-		this.lienImageFace = lienImageFace;
-	}
-
-	public void setCouleur(Couleur couleur) {
-		this.couleur = couleur;
-	}
-
-	public void setValeur(int valeur) {
-		Valeur = valeur;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
+	@Override
+	public String toString() {
+		return nom + " de " + couleur.getNom();
 	}
 
 	@Override
-	public String getCouleur() {
-		// TODO Auto-generated method stub
-		return null;
+	public Couleur getCouleur() {
+		return this.couleur;
 	}
 
 	@Override
 	public int getValeur() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.valeur;
 	}
 
 	@Override
 	public String getNom() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.nom;
 	}
 
 	@Override
 	public boolean estVisible() {
-		// TODO Auto-generated method stub
-		return false;
+		return visible;
 	}
 
 	@Override
 	public String getLienFace() {
-		// TODO Auto-generated method stub
-		return null;
+		return lienImageFace;
 	}
 
 }

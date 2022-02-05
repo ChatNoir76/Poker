@@ -1,12 +1,25 @@
 package fr.cnam.grp4.poker.model;
 
 public enum Couleur {
-	Trefle("Trèfle","c",100),
-	Carreau("Carreau", "d",200),
-	Coeur("Coeur","h",300),
-	Pic("Pic","s",400);
+	Trefle("Trèfle","c"),
+	Carreau("Carreau", "d"),
+	Coeur("Coeur","h"),
+	Pic("Pic","s");
 
-	Couleur(String nom, String symbole, int valeur) {
-		
+	private String nom;
+	private String symbole;
+	
+	private Couleur(String nom, String symbole) {
+		this.nom = nom;
+		this.symbole = symbole;
 	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public String getSymbole() {
+		return symbole;
+	}
+	
 }

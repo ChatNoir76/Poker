@@ -1,8 +1,10 @@
 package fr.cnam.grp4.poker;
 
 import fr.cnam.grp4.poker.model.Carte;
+import fr.cnam.grp4.poker.model.CarteFactory;
 import fr.cnam.grp4.poker.model.JeuPoker;
 import fr.cnam.grp4.poker.model.Joueur;
+import fr.cnam.grp4.poker.service.JeuPokerException;
 import fr.cnam.grp4.poker.view.IHMJoueur;
 
 public class PokerApplication implements IPokerApplication {
@@ -16,7 +18,30 @@ public class PokerApplication implements IPokerApplication {
 		IHMJoueur ihm2 = new IHMJoueur("Goliath");
 		PokerApplication.controleur().ajouteJoueur(ihm2);
 		
-
+		PokerApplication.controleur().distributionCartes();
+		
+//		int cursor = 0;
+//		boolean isNull = false;
+//		while(!isNull && cursor != 60) {
+//			Carte carte1 = CarteFactory.eInstance().prendreCarte();
+//			if(carte1 == null) {
+//				isNull = true;
+//			}else {
+//				cursor++;
+//				System.out.println("carte n°" + cursor + "  => " + carte1 + "  [" + carte1.getLienFace() + "]");
+//				CarteFactory.eInstance().remettreCarte(carte1);
+//			}
+//		}
+		
+		
+//		int test[] = new int[10];
+//		for(int i = 0; i < 50; i++) {
+//			int index = Utilitaire.eInstance().getRandomInteger(test.length);
+//			test[index]++;
+//			System.out.println("nombre= " + index);
+//		}
+//		System.out.println("******************");
+//		System.out.println("=> " + test);
 	}
 	/**
 	 * Instance unique de l'application
@@ -47,13 +72,44 @@ public class PokerApplication implements IPokerApplication {
 	 */
 	private PokerApplication() {
 		this.jeuPoker = new JeuPoker();
+		
+	}
+	
+	public void distributionCartes() {
+		//distribution du flop
 		Carte[] cartes = new Carte[3];
-		cartes[0] = new Carte();
-		cartes[1] = new Carte();
-		cartes[2] = new Carte();
+		cartes[0] = CarteFactory.eInstance().prendreCarte();
+		cartes[1] = CarteFactory.eInstance().prendreCarte();
+		cartes[2] = CarteFactory.eInstance().prendreCarte();
 		this.jeuPoker.setFlop(cartes);
-		this.jeuPoker.setTurn(new Carte());
-		this.jeuPoker.setRiver(new Carte());
+		//distribution du turn
+		this.jeuPoker.setTurn(CarteFactory.eInstance().prendreCarte());
+		//distribution du river
+		this.jeuPoker.setRiver(CarteFactory.eInstance().prendreCarte());
+		//distribution aux joueurs
+		Joueur[] listeJoueur = this.jeuPoker.getAllJoueur();
+		for(Joueur j: listeJoueur) {
+			try {
+				j.setCartes(new Carte[] {CarteFactory.eInstance().prendreCarte(), CarteFactory.eInstance().prendreCarte()});
+			} catch (JeuPokerException e) {
+				e.printStackTrace();
+			}
+		}
+		this.jeuPoker.notifyIHM();
+	}
+	
+	public void recuperationCartes() {
+		//récupération du flop
+		CarteFactory.eInstance().remettreCartes(this.jeuPoker.getFlop());
+		//récupération du turn
+		CarteFactory.eInstance().remettreCarte(this.jeuPoker.getTurn());
+		//récupération du river
+		CarteFactory.eInstance().remettreCarte(this.jeuPoker.getRiver());
+		//récupération des cartes des joueurs
+		Joueur[] listeJoueur = this.jeuPoker.getAllJoueur();
+		for(Joueur j: listeJoueur) {
+			CarteFactory.eInstance().remettreCartes(j.getCartes());
+		}
 	}
 	/**
 	 * 

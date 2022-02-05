@@ -12,7 +12,6 @@ public class JeuPoker extends Observable{
 	private final static int RIVER_INDEX = 4;
 	private final static int INDEX_LIST_SIZE = 5;
 	
-	//private JeuPokerObservableApp obsApp;
 	/**
 	 * Contient les 5 cartes de la manche
 	 * cartes 0 à 2: Flop
@@ -53,6 +52,10 @@ public class JeuPoker extends Observable{
 	public Joueur getJoueur(String speudo) {
 		Optional<Joueur> joueur = this.joueurs.stream().filter(j -> j.getNom().equals(speudo)).findFirst();
 		return joueur.orElseThrow();
+	}
+	
+	public Joueur[] getAllJoueur() {
+		return this.joueurs.toArray(Joueur[]::new);
 	}
 
 	public void ajouteJoueur(Joueur joueur) {
