@@ -155,7 +155,11 @@ public class PokerApplication implements IPokerApplication {
 	@Override
 	public void recommencerPartie(String joueur) {
 		recuperationCartes();
-		
+		this.jeuPoker.resetMessages();
+		this.jeuPoker.clearManche();
+		this.jeuPoker.ajouteMessage("Nouvelle Partie");
+		distributionCartes();
+		this.jeuPoker.notifyIHM();
 	}
 	@Override
 	public void miserSimpleBlind(String joueur) {
@@ -168,6 +172,12 @@ public class PokerApplication implements IPokerApplication {
 	@Override
 	public void miserJetons(String joueur, int nbjetons) {
 		Joueur j = this.jeuPoker.getJoueur(joueur);
+		try {
+			j.setMiseManche(j.getMiseManche() + nbjetons);
+			this.jeuPoker.setPot(this.jeuPoker.getPot() + nbjetons);
+		} catch (JeuPokerException e) {
+			e.printStackTrace();
+		}
 		this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " a misé " + nbjetons + " jeton(s)");
 		this.jeuPoker.notifyIHM();
 	}

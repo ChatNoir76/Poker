@@ -109,7 +109,7 @@ public class Joueur {
 	/**
 	 * détermine la mise de la manche du joueur
 	 * @param miseManche mise de la manche du joueur
-	 * @throws JeuPokerException 
+	 * @throws JeuPokerException la mise doit être supérieure ou égale à zéro 
 	 */
 	public void setMiseManche(int miseManche) throws JeuPokerException {
 		if(miseManche >= 0) {

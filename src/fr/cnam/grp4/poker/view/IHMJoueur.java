@@ -101,13 +101,11 @@ public class IHMJoueur implements Observer, FormulaireInt {
 	 * @param enabled false pour bloquer les boutons de l'ihm
 	 */
 	private void peutUtiliserFonctionJeu(boolean enabled) {
-		if(joue) {
-			for(String button: ALL_OTHER_BUTTON) {
-				if(enabled) {
-					this.vue.activer(button);
-				} else {
-					this.vue.desactiver(button);
-				}
+		for(String button: ALL_OTHER_BUTTON) {
+			if(enabled) {
+				this.vue.activer(button);
+			} else {
+				this.vue.desactiver(button);
 			}
 		}
 	}
@@ -116,13 +114,11 @@ public class IHMJoueur implements Observer, FormulaireInt {
 	 * @param enabled false pour bloquer les boutons de l'ihm
 	 */
 	private void peutUtiliserFonctionDonneur(boolean enabled) {
-		if(joue) {
-			for(String button: ALL_DONNEUR_BUTTON) {
-				if(enabled) {
-					this.vue.activer(button);
-				} else {
-					this.vue.desactiver(button);
-				}
+		for(String button: ALL_DONNEUR_BUTTON) {
+			if(enabled) {
+				this.vue.activer(button);
+			} else {
+				this.vue.desactiver(button);
 			}
 		}
 	}
@@ -149,12 +145,19 @@ public class IHMJoueur implements Observer, FormulaireInt {
 		afficheMessages(jeu.getMessages());
 		
 		Joueur me = jeu.getJoueur(pseudo);
-		//si le joueur a abandonné, il ne peux plus jouer
-		if(me.isAbandon() && this.joue == true) {
-			peutUtiliserFonctionJeu(false);
-			peutUtiliserFonctionDonneur(false);
-			this.joue = false;
-		}
+		//si le joueur a abandonné, il ne peux plus jouer la manche
+		peutUtiliserFonctionJeu(!me.isAbandon());
+		peutUtiliserFonctionDonneur(!me.isAbandon());
+		
+//		if(me.isAbandon() && this.joue == true) {
+//			peutUtiliserFonctionJeu(false);
+//			peutUtiliserFonctionDonneur(false);
+//			this.joue = false;
+//		}else if(!me.isAbandon() && this.joue == false) {
+//			peutUtiliserFonctionJeu(true);
+//			peutUtiliserFonctionDonneur(true);
+//			this.joue = true;
+//		}
 		
 		//affichage des cartes du joueur
 		this.vue.setImage(carte1, me.getCartes()[0].getLienFace());
@@ -197,6 +200,9 @@ public class IHMJoueur implements Observer, FormulaireInt {
 				break;
 			case BT_PASSER:
 				PokerApplication.eInstance().passer(this.pseudo);
+				break;
+			case BT_RECOMMENCER:
+				PokerApplication.eInstance().recommencerPartie(this.pseudo);
 				break;
 			default:
 				break;

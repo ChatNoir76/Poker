@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Optional;
 
+import fr.cnam.grp4.poker.service.JeuPokerException;
+
 @SuppressWarnings("deprecation")
 public class JeuPoker extends Observable{
 	
@@ -37,12 +39,29 @@ public class JeuPoker extends Observable{
 	
 	private JeuPoker(int blind) {
 		this.messages = new ArrayList<String>();
-		this.cartes = new Carte[INDEX_LIST_SIZE];
 		this.joueurs = new ArrayList<Joueur>();
-		this.pot = 0;
 		this.blind = blind;
-		
+		this.cartes = new Carte[INDEX_LIST_SIZE];
+		this.pot = 0;
 		ajouteMessage("Bonjour à tous et bienvenue");
+	}
+	
+	public void clearManche() {
+		this.cartes = new Carte[INDEX_LIST_SIZE];
+		this.pot = 0;
+		for(Joueur j: this.getAllJoueur()) {
+			try {
+				j.setMiseManche(0);
+				j.setAbandon(false);
+			} catch (JeuPokerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void resetMessages() {
+		this.messages.clear();
 	}
 	
 	public String[] getMessages() {
