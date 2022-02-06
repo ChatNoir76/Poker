@@ -13,28 +13,35 @@ import fr.cnam.ihm.FormulaireInt;
 
 @SuppressWarnings("deprecation")
 public class IHMJoueur implements Observer, FormulaireInt {
-
-	public static final String BT_MISER_SIMPLE = "BT_MISERS";
-	public static final String BT_MISER_DOUBLE = "BT_MISERD";
-	public static final String BT_MISER = "BT_MISER";
-	public static final String BT_TAPIS = "BT_TAPIS";
-	public static final String BT_PASSER = "BT_PASSER";
-	public static final String BT_ABANDONNER = "BT_ABANDONNER";
-	public static final String BT_PRENDREPOT = "BT_PRENDREPOT";
-	public static final String[] ALL_OTHER_BUTTON = {BT_MISER, BT_MISER_SIMPLE, BT_MISER_DOUBLE, BT_TAPIS, BT_PASSER, BT_ABANDONNER, BT_PRENDREPOT};
 	
-	public static final String BT_FLOP = "BT_FLOP";
-	public static final String BT_TURN = "BT_TURN";
-	public static final String BT_RIVER = "BT_RIVER";
-	public static final String BT_RECOMMENCER = "BT_RECOMMENCER";
-	public static final String[] ALL_DONNEUR_BUTTON = {BT_FLOP, BT_TURN, BT_RIVER, BT_RECOMMENCER};
+	private static final String BT_MISER_SIMPLE = "BT_MISERS";
+	private static final String BT_MISER_DOUBLE = "BT_MISERD";
+	private static final String BT_MISER = "BT_MISER";
+	private static final String BT_TAPIS = "BT_TAPIS";
+	private static final String BT_PASSER = "BT_PASSER";
+	private static final String BT_ABANDONNER = "BT_ABANDONNER";
+	private static final String BT_PRENDREPOT = "BT_PRENDREPOT";
+	private static final String[] ALL_OTHER_BUTTON = {BT_MISER, BT_MISER_SIMPLE, BT_MISER_DOUBLE, BT_TAPIS, BT_PASSER, BT_ABANDONNER, BT_PRENDREPOT};
 	
-	public static final String TXT_MISER = "TXT_MISER";
-	public static final String TXT_INFORMATION = "TXT_InfoG";
+	private static final String BT_FLOP = "BT_FLOP";
+	private static final String BT_TURN = "BT_TURN";
+	private static final String BT_RIVER = "BT_RIVER";
+	private static final String BT_RECOMMENCER = "BT_RECOMMENCER";
+	private static final String[] ALL_DONNEUR_BUTTON = {BT_FLOP, BT_TURN, BT_RIVER, BT_RECOMMENCER};
+	
+	private static final String TXT_MISER = "TXT_MISER";
+	private static final String TXT_INFORMATION = "TXT_InfoG";
+	private static final String TXT_POT = "TXT_Pot";
+	private static final String TXT_POT_JOUEUR = "TXT_Pot_1";
+	private static final String TXT_MISECUMUL_JOUEUR = "TXT_Mise_1";
+	
+	private static final int IMAGE_HEIGTH_VALUE = 96;
+	private static final int IMAGE_WIDTH_VALUE = 71;
 	
 	private Formulaire vue;
 	private String pseudo;
 	private boolean joue;
+	private boolean elimination;
 	private JLabel carte1;
 	private JLabel carte2;
 	
@@ -47,6 +54,7 @@ public class IHMJoueur implements Observer, FormulaireInt {
 	public IHMJoueur(String pseudo) {
 		this.pseudo = pseudo;
 		this.joue = true;
+		this.elimination = false;
 		this.vue = new Formulaire(this.pseudo, this, 1000, 450);
 		this.vue.setPosition(5, 5);
 		this.vue.addLabel("Action du JOUEUR");
@@ -71,17 +79,30 @@ public class IHMJoueur implements Observer, FormulaireInt {
 	
 		this.vue.setPosition(640, 10);
 		this.vue.addZoneText(TXT_INFORMATION, "Info du jeu", false, "", 300, 350);
+		
 		this.vue.setPosition(x1 + 55, y1);
 		this.vue.addText(TXT_MISER, "", true, "0");
 		
-		this.carte1 = this.vue.addImage("image joueur 1", 250, 10, 71, 96, "");
-		this.carte2 = this.vue.addImage("image joueur 2", 326, 10, 71, 96, "");
+		this.vue.setPosition(250, 10);
+		this.vue.addText(TXT_POT, "POT", false, "0");
+		int y3 = this.vue.getYCour();
 		
-		this.carteFlop1 = this.vue.addImage("image plateau 1", 250, 111, 71, 96, "");
-		this.carteFlop2 = this.vue.addImage("image plateau 2", 326, 111, 71, 96, "");
-		this.carteFlop3 = this.vue.addImage("image plateau 3", 402, 111, 71, 96, "");
-		this.carteTurn = this.vue.addImage("image plateau 4", 478, 111, 71, 96, "");
-		this.carteRiver = this.vue.addImage("image plateau 5", 554, 111, 71, 96, "");
+		//Cartes du plateau
+		this.carteFlop1 = this.vue.addImage("image plateau 1", 250, y3, IMAGE_WIDTH_VALUE, IMAGE_HEIGTH_VALUE, "");
+		this.carteFlop2 = this.vue.addImage("image plateau 2", 326, y3, IMAGE_WIDTH_VALUE, IMAGE_HEIGTH_VALUE, "");
+		this.carteFlop3 = this.vue.addImage("image plateau 3", 402, y3, IMAGE_WIDTH_VALUE, IMAGE_HEIGTH_VALUE, "");
+		this.carteTurn = this.vue.addImage("image plateau 4", 478, y3, IMAGE_WIDTH_VALUE, IMAGE_HEIGTH_VALUE, "");
+		this.carteRiver = this.vue.addImage("image plateau 5", 554, y3, IMAGE_WIDTH_VALUE, IMAGE_HEIGTH_VALUE, "");
+		//Mes cartes
+		this.vue.setPosition(250, y3 + IMAGE_HEIGTH_VALUE + 5);
+		this.vue.addLabel("Mes Cartes");
+		y3 = this.vue.getYCour();
+		this.carte1 = this.vue.addImage("image joueur 1", 250, y3, IMAGE_WIDTH_VALUE, IMAGE_HEIGTH_VALUE, "");
+		this.carte2 = this.vue.addImage("image joueur 2", 326, y3, IMAGE_WIDTH_VALUE, IMAGE_HEIGTH_VALUE, "");
+		this.vue.setPosition(402, y3);
+		this.vue.addText(TXT_POT_JOUEUR, "POT du joueur", false, "0");
+		this.vue.addText(TXT_MISECUMUL_JOUEUR, "Mise en cours : ", false, "0");
+		
 	}
 	/**
 	 * Récupère le Pseudo du joueur
@@ -144,20 +165,22 @@ public class IHMJoueur implements Observer, FormulaireInt {
 		
 		afficheMessages(jeu.getMessages());
 		
-		Joueur me = jeu.getJoueur(pseudo);
-		//si le joueur a abandonné, il ne peux plus jouer la manche
-		peutUtiliserFonctionJeu(!me.isAbandon());
-		peutUtiliserFonctionDonneur(!me.isAbandon());
+		//Traitement données du jeu
+		this.vue.setValeurChamp(TXT_POT, String.valueOf(jeu.getPot()));
 		
-//		if(me.isAbandon() && this.joue == true) {
-//			peutUtiliserFonctionJeu(false);
-//			peutUtiliserFonctionDonneur(false);
-//			this.joue = false;
-//		}else if(!me.isAbandon() && this.joue == false) {
-//			peutUtiliserFonctionJeu(true);
-//			peutUtiliserFonctionDonneur(true);
-//			this.joue = true;
-//		}
+		//Traitement données du joueur
+		Joueur me = jeu.getJoueur(pseudo);
+		this.elimination = me.isEliminer();
+		if(this.elimination) {
+			peutUtiliserFonctionJeu(false);
+			peutUtiliserFonctionDonneur(false);
+		}else {
+			peutUtiliserFonctionJeu(!me.isAbandon());
+			peutUtiliserFonctionDonneur(!me.isAbandon());
+		}
+		
+		this.vue.setValeurChamp(TXT_POT_JOUEUR, String.valueOf(me.getJetons()));
+		this.vue.setValeurChamp(TXT_MISECUMUL_JOUEUR, String.valueOf(me.getMiseManche()));
 		
 		//affichage des cartes du joueur
 		this.vue.setImage(carte1, me.getCartes()[0].getLienFace());
@@ -174,7 +197,7 @@ public class IHMJoueur implements Observer, FormulaireInt {
 
 	@Override
 	public void submit(Formulaire form, String nom) {
-		if(this.joue) {
+		if(this.joue && !this.elimination) {
 			switch(nom) {
 			case BT_MISER:
 				PokerApplication.eInstance().miserJetons(this.pseudo, Integer.valueOf(form.getValeurChamp(TXT_MISER)));
@@ -203,6 +226,9 @@ public class IHMJoueur implements Observer, FormulaireInt {
 				break;
 			case BT_RECOMMENCER:
 				PokerApplication.eInstance().recommencerPartie(this.pseudo);
+				break;
+			case BT_PRENDREPOT:
+				PokerApplication.eInstance().prendrePot(this.pseudo);
 				break;
 			default:
 				break;

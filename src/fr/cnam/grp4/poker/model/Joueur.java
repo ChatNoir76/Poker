@@ -30,6 +30,10 @@ public class Joueur {
 	 * savoir si le joueur à abandonné
 	 */
 	private boolean abandon;
+	/**
+	 * savoir si le joueur est éliminé
+	 */
+	private boolean eliminer;
 	
 	private Joueur(String nom, int jetons, boolean donneur) {
 		this.nom = nom;
@@ -38,6 +42,7 @@ public class Joueur {
 		this.miseManche = 0;
 		this.donneur = donneur;
 		this.abandon = false;
+		this.eliminer = false;
 	}
 	/**
 	 * Création d'un joueur
@@ -145,6 +150,14 @@ public class Joueur {
 	 */
 	public void setAbandon(boolean abandon) {
 		this.abandon = abandon;
+	}
+	
+	public boolean isEliminer() {
+		return eliminer;
+	}
+	
+	public void setEliminer(boolean eliminer) {
+		this.eliminer = eliminer;
 	}
 	
 }

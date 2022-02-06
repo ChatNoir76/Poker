@@ -78,7 +78,9 @@ public class PokerApplication implements IPokerApplication {
 	public void startApplication() {
 		distributionCartes();
 	}
-	
+	/**
+	 * 
+	 */
 	private void distributionCartes() {
 		//distribution du flop
 		Carte[] cartes = new Carte[3];
@@ -101,7 +103,9 @@ public class PokerApplication implements IPokerApplication {
 		}
 		this.jeuPoker.notifyIHM();
 	}
-	
+	/**
+	 * Récupère les cartes du jeu et les replace dans le distributeur
+	 */
 	private void recuperationCartes() {
 		//récupération du flop
 		CarteFactory.eInstance().remettreCartes(this.jeuPoker.getFlop());
@@ -196,6 +200,29 @@ public class PokerApplication implements IPokerApplication {
 		Joueur j = this.jeuPoker.getJoueur(joueur);
 		j.setAbandon(true);
 		this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " vient d'abandonner");
+		this.jeuPoker.notifyIHM();
+	}
+	@Override
+	public void prendrePot(String joueur) {
+		Joueur j = this.jeuPoker.getJoueur(joueur);
+		this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " vient de prendre le pot");
+		
+		//les joueurs perdent leurs mises
+		for(Joueur p: this.jeuPoker.getAllJoueur()) {
+			try {
+				p.setJetons(p.getJetons() - p.getMiseManche());
+				p.setMiseManche(0);
+			} catch (JeuPokerException e) {
+				this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " n'avait pas assez dans sa gagnotte... le vilain !!!");
+				p.setEliminer(true);
+			}
+		}
+		try {
+			j.setJetons(j.getJetons() + this.jeuPoker.getPot());
+			this.jeuPoker.setPot(0);
+		} catch (JeuPokerException e) {
+			e.printStackTrace();
+		}
 		this.jeuPoker.notifyIHM();
 	}
 }
