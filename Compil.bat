@@ -1,3 +1,4 @@
+chcp 65001
 mkdir bin
 del /f /s /q bin\*.class
 
