@@ -27,6 +27,10 @@ public class CarteFactory {
 		if(instance == null) instance = new CarteFactory();
 		return instance;
 	}
+	/**
+	 * Création de la factory d'un jeu de 52 cartes
+	 * Les images sont récupèrées du dossier "ressources"
+	 */
 	private CarteFactory() {
 		this.jeuDansOrdre = new Carte[52];
 		this.distributeur = new ArrayList<Carte>();

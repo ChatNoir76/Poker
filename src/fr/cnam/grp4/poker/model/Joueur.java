@@ -35,29 +35,21 @@ public class Joueur {
 	 */
 	private boolean eliminer;
 	
-	private Joueur(String nom, int jetons, boolean donneur) {
+	private Joueur(String nom, int jetons) {
 		this.nom = nom;
 		this.cartes = new Carte[2];
 		this.jetons = jetons;
 		this.miseManche = 0;
-		this.donneur = donneur;
+		this.donneur = false;
 		this.abandon = false;
 		this.eliminer = false;
 	}
 	/**
 	 * Création d'un joueur
 	 * @param nom Pseudo du joueur
-	 * @param donneur Détermine si le joueur sera donneur
-	 */
-	public Joueur(String nom, boolean donneur) {
-		this(nom, 1000, donneur);
-	}
-	/**
-	 * Création d'un joueur
-	 * @param nom Pseudo du joueur
 	 */
 	public Joueur(String nom) {
-		this(nom, false);
+		this(nom, 1000);
 	}
 	/**
 	 * Récupère le nom/pseudo du joueur
@@ -138,24 +130,30 @@ public class Joueur {
 		this.donneur = donneur;
 	}
 	/**
-	 * 
-	 * @return
+	 * Détermine si le joueur à abandonner la manche
+	 * @return true pour abandonné
 	 */
 	public boolean isAbandon() {
 		return abandon;
 	}
 	/**
-	 * 
+	 * Change le statut d'abandon du joueur
 	 * @param abandon
 	 */
 	public void setAbandon(boolean abandon) {
 		this.abandon = abandon;
 	}
-	
+	/**
+	 * Détermine si le joueur est éliminé de toute partie
+	 * @return true ne peux plus jouer
+	 */
 	public boolean isEliminer() {
 		return eliminer;
 	}
-	
+	/**
+	 * Change le statut d'élimination du joueur
+	 * @param eliminer
+	 */
 	public void setEliminer(boolean eliminer) {
 		this.eliminer = eliminer;
 	}

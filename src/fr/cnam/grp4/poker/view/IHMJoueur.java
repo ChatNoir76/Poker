@@ -23,13 +23,15 @@ public class IHMJoueur implements Observer, FormulaireInt {
 	private static final String BT_PRENDREPOT = "BT_PRENDREPOT";
 	private static final String[] ALL_OTHER_BUTTON = {BT_MISER, BT_MISER_SIMPLE, BT_MISER_DOUBLE, BT_TAPIS, BT_PASSER, BT_ABANDONNER, BT_PRENDREPOT};
 	
+	private static final String BT_BLIND = "BT_BLIND";
 	private static final String BT_FLOP = "BT_FLOP";
 	private static final String BT_TURN = "BT_TURN";
 	private static final String BT_RIVER = "BT_RIVER";
 	private static final String BT_RECOMMENCER = "BT_RECOMMENCER";
-	private static final String[] ALL_DONNEUR_BUTTON = {BT_FLOP, BT_TURN, BT_RIVER, BT_RECOMMENCER};
+	private static final String[] ALL_DONNEUR_BUTTON = {BT_BLIND, BT_FLOP, BT_TURN, BT_RIVER, BT_RECOMMENCER};
 	
 	private static final String TXT_MISER = "TXT_MISER";
+	private static final String TXT_BLIND = "TXT_BLIND";
 	private static final String TXT_INFORMATION = "TXT_InfoG";
 	private static final String TXT_POT = "TXT_Pot";
 	private static final String TXT_POT_JOUEUR = "TXT_Pot_1";
@@ -72,16 +74,23 @@ public class IHMJoueur implements Observer, FormulaireInt {
 		int y2 = this.vue.getYCour();
 		this.vue.setPosition(x2, y2 + 50);
 		this.vue.addLabel("Action du DONNEUR");
+		int x4 = this.vue.getXCour();
+		int y4 = this.vue.getYCour();
+		this.vue.addButton(BT_BLIND, "Définir Blind");
+		
 		this.vue.addButton(BT_FLOP, "Distribuer Flop");
 		this.vue.addButton(BT_TURN, "Distribuer Turn");
 		this.vue.addButton(BT_RIVER, "Distribuer River");
 		this.vue.addButton(BT_RECOMMENCER, "Recommencer Partie");
 	
+		this.vue.setPosition(x1 + 53, y1);
+		this.vue.addText(TXT_MISER, "", true, "0");
+		
+		this.vue.setPosition(x4 + 85, y4);
+		this.vue.addText(TXT_BLIND, "", true, "0");
+		
 		this.vue.setPosition(640, 10);
 		this.vue.addZoneText(TXT_INFORMATION, "Info du jeu", false, "", 300, 350);
-		
-		this.vue.setPosition(x1 + 55, y1);
-		this.vue.addText(TXT_MISER, "", true, "0");
 		
 		this.vue.setPosition(250, 10);
 		this.vue.addText(TXT_POT, "POT", false, "0");
@@ -176,7 +185,7 @@ public class IHMJoueur implements Observer, FormulaireInt {
 			peutUtiliserFonctionDonneur(false);
 		}else {
 			peutUtiliserFonctionJeu(!me.isAbandon());
-			peutUtiliserFonctionDonneur(!me.isAbandon());
+			peutUtiliserFonctionDonneur(me.isDonneur());
 		}
 		
 		this.vue.setValeurChamp(TXT_POT_JOUEUR, String.valueOf(me.getJetons()));
@@ -229,6 +238,10 @@ public class IHMJoueur implements Observer, FormulaireInt {
 				break;
 			case BT_PRENDREPOT:
 				PokerApplication.eInstance().prendrePot(this.pseudo);
+				break;
+			case BT_BLIND:
+				PokerApplication.eInstance().definirBlind(Integer.valueOf(form.getValeurChamp(TXT_BLIND)));
+				form.setValeurChamp(TXT_BLIND, "0");
 				break;
 			default:
 				break;

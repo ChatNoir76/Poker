@@ -13,7 +13,9 @@ public class JeuPoker extends Observable{
 	private final static int TURN_INDEX = 3;
 	private final static int RIVER_INDEX = 4;
 	private final static int INDEX_LIST_SIZE = 5;
+	private final static int NO_PLAYER = -1;
 	
+	private int indexDonneur;
 	/**
 	 * Contient les 5 cartes de la manche
 	 * cartes 0 à 2: Flop
@@ -40,12 +42,18 @@ public class JeuPoker extends Observable{
 	private JeuPoker(int blind) {
 		this.messages = new ArrayList<String>();
 		this.joueurs = new ArrayList<Joueur>();
+		this.indexDonneur = NO_PLAYER;
 		this.blind = blind;
 		this.cartes = new Carte[INDEX_LIST_SIZE];
 		this.pot = 0;
 		ajouteMessage("Bonjour à tous et bienvenue");
 	}
-	
+	public JeuPoker() {
+		this(5);
+	}
+	/**
+	 * Reset les paramètres de la manche terminée afin d'un commencer une autre
+	 */
 	public void clearManche() {
 		this.cartes = new Carte[INDEX_LIST_SIZE];
 		this.pot = 0;
@@ -59,27 +67,40 @@ public class JeuPoker extends Observable{
 			}
 		}
 	}
-	
+	/**
+	 * Efface les messages de la console
+	 */
 	public void resetMessages() {
 		this.messages.clear();
 	}
-	
+	/**
+	 * Récupère les messages du jeu
+	 * @return Liste de message
+	 */
 	public String[] getMessages() {
 		return this.messages.toArray(String[]::new);
 	}
-	
+	/**
+	 * Ajoute un message au jeu
+	 * @param message
+	 */
 	public void ajouteMessage(String message) {
 		System.out.println(message);
 		this.messages.add(0, message);
 	}
-
-	public JeuPoker() {
-		this(5);
-	}
-	
+	/**
+	 * indique les changements aux observeurs
+	 */
 	public void notifyIHM() {
 		this.setChanged();
 		this.notifyObservers(this);
+	}
+	
+	public void nextDonneur() {
+		this.joueurs.forEach(j -> j.setDonneur(false));
+		this.indexDonneur = this.indexDonneur + 1 < this.joueurs.size() ? this.indexDonneur + 1 : 0;
+		Joueur j = this.joueurs.get(indexDonneur);
+		j.setDonneur(true);
 	}
 	
 	public Joueur getJoueur(String speudo) {
@@ -92,6 +113,8 @@ public class JeuPoker extends Observable{
 	}
 
 	public void ajouteJoueur(Joueur joueur) {
+		if(this.indexDonneur == NO_PLAYER) this.indexDonneur = 0;
+		joueur.setDonneur(false);
 		this.joueurs.add(joueur);
 	}
 

@@ -18,6 +18,9 @@ public class PokerApplication implements IPokerApplication {
 		IHMJoueur ihm2 = new IHMJoueur("Goliath");
 		PokerApplication.controleur().ajouteJoueur(ihm2);
 		
+		IHMJoueur ihm3 = new IHMJoueur("Robert");
+		PokerApplication.controleur().ajouteJoueur(ihm3);
+		
 		PokerApplication.controleur().startApplication();
 		
 //		int cursor = 0;
@@ -76,6 +79,7 @@ public class PokerApplication implements IPokerApplication {
 	}
 	
 	public void startApplication() {
+		this.jeuPoker.nextDonneur();
 		distributionCartes();
 	}
 	/**
@@ -133,6 +137,7 @@ public class PokerApplication implements IPokerApplication {
 	@Override
 	public void definirBlind(int nbjeton) {
 		this.jeuPoker.setBlind(nbjeton);
+		this.jeuPoker.ajouteMessage("La blind est maintenant à " + nbjeton + " jeton(s)");
 		this.jeuPoker.notifyIHM();
 	}
 	@Override
@@ -162,6 +167,7 @@ public class PokerApplication implements IPokerApplication {
 		this.jeuPoker.resetMessages();
 		this.jeuPoker.clearManche();
 		this.jeuPoker.ajouteMessage("Nouvelle Partie");
+		this.jeuPoker.nextDonneur();
 		distributionCartes();
 		this.jeuPoker.notifyIHM();
 	}
