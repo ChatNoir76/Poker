@@ -10,41 +10,12 @@ import fr.cnam.grp4.poker.view.IHMJoueur;
 public class PokerApplication implements IPokerApplication {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		IHMJoueur ihm1 = new IHMJoueur("David");
-		PokerApplication.controleur().ajouteJoueur(ihm1);
 		
-		IHMJoueur ihm2 = new IHMJoueur("Goliath");
-		PokerApplication.controleur().ajouteJoueur(ihm2);
+		for(String arg: args) {
+			PokerApplication.getLocalInstance().ajouteJoueur(new IHMJoueur(arg));
+		}
 		
-		IHMJoueur ihm3 = new IHMJoueur("Robert");
-		PokerApplication.controleur().ajouteJoueur(ihm3);
-		
-		PokerApplication.controleur().startApplication();
-		
-//		int cursor = 0;
-//		boolean isNull = false;
-//		while(!isNull && cursor != 60) {
-//			Carte carte1 = CarteFactory.eInstance().prendreCarte();
-//			if(carte1 == null) {
-//				isNull = true;
-//			}else {
-//				cursor++;
-//				System.out.println("carte n°" + cursor + "  => " + carte1 + "  [" + carte1.getLienFace() + "]");
-//				CarteFactory.eInstance().remettreCarte(carte1);
-//			}
-//		}
-		
-		
-//		int test[] = new int[10];
-//		for(int i = 0; i < 50; i++) {
-//			int index = Utilitaire.eInstance().getRandomInteger(test.length);
-//			test[index]++;
-//			System.out.println("nombre= " + index);
-//		}
-//		System.out.println("******************");
-//		System.out.println("=> " + test);
+		PokerApplication.getLocalInstance().startApplication();
 	}
 	/**
 	 * Instance unique de l'application
@@ -62,7 +33,7 @@ public class PokerApplication implements IPokerApplication {
 	 * Accesseur du singleton pour le controleur
 	 * @return
 	 */
-	static PokerApplication controleur() {
+	static PokerApplication getLocalInstance() {
 		if(instance == null) instance = new PokerApplication();
 		return instance;
 	}

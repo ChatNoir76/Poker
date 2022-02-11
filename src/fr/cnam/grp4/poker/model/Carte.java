@@ -24,12 +24,12 @@ public class Carte extends AbstractCarte {
 	 */
 	private String lienImageFace;
 	
-	public Carte(Couleur couleur, int valeur, String nom, String lienImageFace) {
+	public Carte(Couleur couleur, int valeur) {
 		this.couleur = couleur;
 		this.valeur = valeur;
-		this.nom = nom;
+		this.nom = this.findNameFromValeur(valeur + 1);
 		this.visible = false;
-		this.lienImageFace = lienImageFace;
+		this.lienImageFace = this.getLienCarteStandard(couleur.getSymbole(), valeur + 1 + 1);
 	}
 
 	public void setVisible(boolean visible) {

@@ -37,6 +37,7 @@ public class CarteFactory {
 		
 		generateCartes();
 		melangeCartes();
+		coupe();
 	}
 	/**
 	 * Génère un paquet de 52 cartes
@@ -46,39 +47,10 @@ public class CarteFactory {
 		int cursor = 0;
 		for(Couleur c: Couleur.values()) {
 			for(int i=0;i<13;i++) {
-				this.jeuDansOrdre[cursor] = new Carte(c, i + 1, findNameFromValeur(i+1), getLienCarteStandard(c.getSymbole(), i + 1));
+				this.jeuDansOrdre[cursor] = new Carte(c, i + 1);
 				cursor++;
 			}
 		}
-	}
-	/**
-	 * Détermine le lien vers l'image de la carte
-	 * @param Symbole Symbole de la couleur
-	 * @param number valeur de la carte 1 à 13
-	 * @return le lien de la carte (voir dossier ressources)
-	 */
-	private String getLienCarteStandard(String Symbole, int number) {
-		String other = ""+number;
-		if(number == 11) {
-			other = "j";
-		}else if (number == 13) {
-			other = "k";
-		}else if (number == 12) {
-			other = "q";
-		}
-		return "Ressources/" + Symbole + other + ".gif";
-	}
-	/**
-	 * Détermine le nom depuis sa valeur
-	 * @param valeur valeur de la carte
-	 * @return Nom de la carte
-	 */
-	private String findNameFromValeur(int valeur) {
-		if(valeur == 1) return "As";
-		if(valeur == 11) return "Valet";
-		if(valeur == 13) return "Roi";
-		if(valeur == 12) return "Reine";
-		return ""+valeur;
 	}
 	/**
 	 * Mélange des cartes pour intégration dans le distributeur
@@ -131,7 +103,11 @@ public class CarteFactory {
 	 * Permet de couper le jeu de carte à un endroit aléatoire
 	 */
 	private void coupe() {
-		
+		int index = Utilitaire.eInstance().getRandomInteger(this.distributeur.size() - 3) + 3;
+		for(int cursor=0;cursor<index;cursor++) {
+			Carte carte = this.distributeur.remove(0);
+			this.distributeur.add(carte);
+		}
 	}
 	
 	

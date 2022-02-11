@@ -1,4 +1,3 @@
 chcp 65001
-cd bin
-java -classpath "." fr.cnam.grp4.poker.PokerApplication
+java -classpath "bin" fr.cnam.grp4.poker.PokerApplication Romeo Juliette Bernardo
 pause
