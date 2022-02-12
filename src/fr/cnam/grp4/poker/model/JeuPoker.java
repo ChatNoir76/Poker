@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Optional;
 
+import fr.cnam.grp4.poker.service.JeuPokerException;
+
 @SuppressWarnings("deprecation")
 public class JeuPoker extends Observable{
 	
@@ -11,8 +13,9 @@ public class JeuPoker extends Observable{
 	private final static int TURN_INDEX = 3;
 	private final static int RIVER_INDEX = 4;
 	private final static int INDEX_LIST_SIZE = 5;
+	private final static int NO_PLAYER = -1;
 	
-	//private JeuPokerObservableApp obsApp;
+	private int indexDonneur;
 	/**
 	 * Contient les 5 cartes de la manche
 	 * cartes 0 à 2: Flop
@@ -34,28 +37,84 @@ public class JeuPoker extends Observable{
 	 */
 	private int blind;
 	
+	private ArrayList<String> messages;
+	
 	private JeuPoker(int blind) {
-		this.cartes = new Carte[INDEX_LIST_SIZE];
+		this.messages = new ArrayList<String>();
 		this.joueurs = new ArrayList<Joueur>();
-		this.pot = 0;
+		this.indexDonneur = NO_PLAYER;
 		this.blind = blind;
+		this.cartes = new Carte[INDEX_LIST_SIZE];
+		this.pot = 0;
+		ajouteMessage("Bonjour à tous et bienvenue");
 	}
-
 	public JeuPoker() {
 		this(5);
 	}
-	
+	/**
+	 * Reset les paramètres de la manche terminée afin d'un commencer une autre
+	 */
+	public void clearManche() {
+		this.cartes = new Carte[INDEX_LIST_SIZE];
+		this.pot = 0;
+		for(Joueur j: this.getAllJoueur()) {
+			try {
+				j.setMiseManche(0);
+				j.setAbandon(false);
+			} catch (JeuPokerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * Efface les messages de la console
+	 */
+	public void resetMessages() {
+		this.messages.clear();
+	}
+	/**
+	 * Récupère les messages du jeu
+	 * @return Liste de message
+	 */
+	public String[] getMessages() {
+		return this.messages.toArray(String[]::new);
+	}
+	/**
+	 * Ajoute un message au jeu
+	 * @param message
+	 */
+	public void ajouteMessage(String message) {
+		System.out.println(message);
+		this.messages.add(0, message);
+	}
+	/**
+	 * indique les changements aux observeurs
+	 */
 	public void notifyIHM() {
 		this.setChanged();
 		this.notifyObservers(this);
+	}
+	
+	public void nextDonneur() {
+		this.joueurs.forEach(j -> j.setDonneur(false));
+		this.indexDonneur = this.indexDonneur + 1 < this.joueurs.size() ? this.indexDonneur + 1 : 0;
+		Joueur j = this.joueurs.get(indexDonneur);
+		j.setDonneur(true);
 	}
 	
 	public Joueur getJoueur(String speudo) {
 		Optional<Joueur> joueur = this.joueurs.stream().filter(j -> j.getNom().equals(speudo)).findFirst();
 		return joueur.orElseThrow();
 	}
+	
+	public Joueur[] getAllJoueur() {
+		return this.joueurs.toArray(Joueur[]::new);
+	}
 
 	public void ajouteJoueur(Joueur joueur) {
+		if(this.indexDonneur == NO_PLAYER) this.indexDonneur = 0;
+		joueur.setDonneur(false);
 		this.joueurs.add(joueur);
 	}
 
