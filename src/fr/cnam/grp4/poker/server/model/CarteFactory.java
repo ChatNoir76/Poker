@@ -1,9 +1,9 @@
-package fr.cnam.grp4.poker.model;
+package fr.cnam.grp4.poker.server.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.cnam.grp4.poker.service.Utilitaire;
+import fr.cnam.grp4.poker.server.service.Utilitaire;
 
 public class CarteFactory {
 	/**

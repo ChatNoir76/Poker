@@ -1,4 +1,4 @@
-package fr.cnam.grp4.poker.service;
+package fr.cnam.grp4.poker.server.service;
 
 public class JeuPokerException extends Exception {
 

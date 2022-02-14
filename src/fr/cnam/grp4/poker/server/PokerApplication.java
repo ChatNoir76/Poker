@@ -1,21 +1,21 @@
-package fr.cnam.grp4.poker;
+package fr.cnam.grp4.poker.server;
 
-import fr.cnam.grp4.poker.model.Carte;
-import fr.cnam.grp4.poker.model.CarteFactory;
-import fr.cnam.grp4.poker.model.JeuPoker;
-import fr.cnam.grp4.poker.model.Joueur;
-import fr.cnam.grp4.poker.service.JeuPokerException;
-import fr.cnam.grp4.poker.view.IHMJoueur;
+import fr.cnam.grp4.poker.client.view.IHMJoueur;
+import fr.cnam.grp4.poker.server.model.Carte;
+import fr.cnam.grp4.poker.server.model.CarteFactory;
+import fr.cnam.grp4.poker.server.model.JeuPoker;
+import fr.cnam.grp4.poker.server.model.Joueur;
+import fr.cnam.grp4.poker.server.service.JeuPokerException;
 
 public class PokerApplication implements IPokerApplication {
 
 	public static void main(String[] args) {
 		
 		for(String arg: args) {
-			PokerApplication.getLocalInstance().ajouteJoueur(new IHMJoueur(arg));
+			//PokerApplication.getLocalInstance().ajouteJoueur(new IHMJoueur(arg));
 		}
-		
-		PokerApplication.getLocalInstance().startApplication();
+		PokerApplication.getLocalInstance();
+		//PokerApplication.getLocalInstance().startApplication();
 	}
 	/**
 	 * Instance unique de l'application
@@ -45,7 +45,7 @@ public class PokerApplication implements IPokerApplication {
 	 * 
 	 */
 	private PokerApplication() {
-		this.jeuPoker = new JeuPoker();
+		this.jeuPoker = new JeuPoker(9100);
 		
 	}
 	

@@ -1,4 +1,4 @@
-package fr.cnam.grp4.poker;
+package fr.cnam.grp4.poker.server;
 
 public interface IPokerApplication {
 	

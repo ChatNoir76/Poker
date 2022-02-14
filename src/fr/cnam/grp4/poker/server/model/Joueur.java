@@ -1,6 +1,6 @@
-package fr.cnam.grp4.poker.model;
+package fr.cnam.grp4.poker.server.model;
 
-import fr.cnam.grp4.poker.service.JeuPokerException;
+import fr.cnam.grp4.poker.server.service.JeuPokerException;
 
 public class Joueur {
 	/**

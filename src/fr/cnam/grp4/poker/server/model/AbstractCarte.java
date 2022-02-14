@@ -1,4 +1,4 @@
-package fr.cnam.grp4.poker.model;
+package fr.cnam.grp4.poker.server.model;
 /**
  * Classe abstraite qui définie une Carte
  * @author chatnoir

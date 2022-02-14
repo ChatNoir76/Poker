@@ -1,13 +1,13 @@
-package fr.cnam.grp4.poker.view;
+package fr.cnam.grp4.poker.client.view;
 
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JLabel;
 
-import fr.cnam.grp4.poker.PokerApplication;
-import fr.cnam.grp4.poker.model.JeuPoker;
-import fr.cnam.grp4.poker.model.Joueur;
+import fr.cnam.grp4.poker.server.PokerApplication;
+import fr.cnam.grp4.poker.server.model.JeuPoker;
+import fr.cnam.grp4.poker.server.model.Joueur;
 import fr.cnam.ihm.Formulaire;
 import fr.cnam.ihm.FormulaireInt;
 

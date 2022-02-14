@@ -1,4 +1,4 @@
-package fr.cnam.grp4.poker.model;
+package fr.cnam.grp4.poker.server.model;
 
 public class Carte extends AbstractCarte {
 	/**
