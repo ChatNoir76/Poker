@@ -1,7 +1,6 @@
 package fr.cnam.grp4.poker.client.view;
 
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JLabel;
 
@@ -11,8 +10,7 @@ import fr.cnam.grp4.poker.server.model.Joueur;
 import fr.cnam.ihm.Formulaire;
 import fr.cnam.ihm.FormulaireInt;
 
-@SuppressWarnings("deprecation")
-public class IHMJoueur implements Observer, FormulaireInt {
+public class IHMJoueur implements FormulaireInt {
 	
 	private static final String BT_MISER_SIMPLE = "BT_MISERS";
 	private static final String BT_MISER_DOUBLE = "BT_MISERD";
@@ -153,15 +151,6 @@ public class IHMJoueur implements Observer, FormulaireInt {
 		}
 	}
 	
-	@Override
-	public void update(Observable o, Object arg) {
-		if(arg instanceof JeuPoker) {
-			traitementInfoJeu((JeuPoker) arg);
-		} else {
-			System.out.println("Objet inconnu reçu par l'ihm");
-		}
-	}
-	
 	private void afficheMessages(String[] messages) {
 		StringBuilder str = new StringBuilder();
 		for(String message: messages) {
@@ -169,8 +158,11 @@ public class IHMJoueur implements Observer, FormulaireInt {
 		}
 		this.vue.setValeurChamp(TXT_INFORMATION, str.toString());
 	}
-	
-	private void traitementInfoJeu(JeuPoker jeu) {
+	/**
+	 * Mise à jour de l'ihm
+	 * @param jeu
+	 */
+	public void update(JeuPoker jeu) {
 		
 		afficheMessages(jeu.getMessages());
 		

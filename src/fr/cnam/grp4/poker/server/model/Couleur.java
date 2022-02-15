@@ -1,6 +1,8 @@
 package fr.cnam.grp4.poker.server.model;
 
-public enum Couleur {
+import java.io.Serializable;
+
+public enum Couleur implements Serializable{
 	Trefle("Trèfle","c"),
 	Carreau("Carreau", "d"),
 	Coeur("Coeur","h"),

@@ -1,6 +1,8 @@
 package fr.cnam.grp4.poker.server;
 
-import fr.cnam.grp4.poker.client.view.IHMJoueur;
+import fr.cnam.grp4.poker.client.communication.JeuPokerObserver;
+import fr.cnam.grp4.poker.server.communication.ClientObserver;
+import fr.cnam.grp4.poker.server.communication.ObservableApplication;
 import fr.cnam.grp4.poker.server.model.Carte;
 import fr.cnam.grp4.poker.server.model.CarteFactory;
 import fr.cnam.grp4.poker.server.model.JeuPoker;
@@ -9,13 +11,19 @@ import fr.cnam.grp4.poker.server.service.JeuPokerException;
 
 public class PokerApplication implements IPokerApplication {
 
+	public static final String VERSION_LOCALE = "LOCALE";
+	
 	public static void main(String[] args) {
 		
-		for(String arg: args) {
-			//PokerApplication.getLocalInstance().ajouteJoueur(new IHMJoueur(arg));
+		if(args[0].equals(VERSION_LOCALE)) {
+			System.out.println("Version Locale...");
+			for(int j=1;j<args.length;j++) {
+				PokerApplication.getLocalInstance().ajouteJoueur(new JeuPokerObserver(args[j]));
+			}
+			PokerApplication.getLocalInstance().startLocaleApplication();
+		}else {
+			System.out.println("Version Sockets...");
 		}
-		PokerApplication.getLocalInstance();
-		//PokerApplication.getLocalInstance().startApplication();
 	}
 	/**
 	 * Instance unique de l'application
@@ -33,10 +41,11 @@ public class PokerApplication implements IPokerApplication {
 	 * Accesseur du singleton pour le controleur
 	 * @return
 	 */
-	static PokerApplication getLocalInstance() {
+	public static PokerApplication getLocalInstance() {
 		if(instance == null) instance = new PokerApplication();
 		return instance;
 	}
+	private ObservableApplication observable;
 	/**
 	 * Jeu de poker
 	 */
@@ -45,13 +54,20 @@ public class PokerApplication implements IPokerApplication {
 	 * 
 	 */
 	private PokerApplication() {
-		this.jeuPoker = new JeuPoker(9100);
-		
+		this.jeuPoker = new JeuPoker();
+		this.observable = new ObservableApplication();
+	}
+	
+	public void startLocaleApplication() {
+		this.jeuPoker.nextDonneur();
+		distributionCartes();
 	}
 	
 	public void startApplication() {
-		this.jeuPoker.nextDonneur();
-		distributionCartes();
+		while(!this.observable.isReady()) {
+			
+		}
+		this.startLocaleApplication();
 	}
 	/**
 	 * 
@@ -76,7 +92,7 @@ public class PokerApplication implements IPokerApplication {
 				e.printStackTrace();
 			}
 		}
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	/**
 	 * Récupère les cartes du jeu et les replace dans le distributeur
@@ -99,17 +115,23 @@ public class PokerApplication implements IPokerApplication {
 	 * @param ihm
 	 */
 	@SuppressWarnings("deprecation")
-	public void ajouteJoueur(IHMJoueur ihm) {
-		this.jeuPoker.addObserver(ihm);
+	public void ajouteJoueur(JeuPokerObserver ihm) {
+		this.observable.addObserver(ihm);
 		this.jeuPoker.ajouteJoueur(new Joueur(ihm.getPseudo()));
 		this.jeuPoker.ajouteMessage("Nouveau joueur: " + ihm.getPseudo());
-		ihm.afficher();
+	}
+	public void ajouteJoueurViaClient(String hostNameClient, int portClient, String pseudo) {
+		ClientObserver monJoueur = new ClientObserver(hostNameClient, portClient, pseudo);
+		this.observable.addObserver(monJoueur);
+		this.jeuPoker.ajouteJoueur(new Joueur(pseudo));
+		this.jeuPoker.ajouteMessage("Nouveau joueur: " + pseudo);
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void definirBlind(int nbjeton) {
 		this.jeuPoker.setBlind(nbjeton);
 		this.jeuPoker.ajouteMessage("La blind est maintenant à " + nbjeton + " jeton(s)");
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void voirFlop() {
@@ -117,20 +139,20 @@ public class PokerApplication implements IPokerApplication {
 		for(Carte carte: this.jeuPoker.getFlop()) {
 			carte.setVisible(true);
 		}
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void voirTurn() {
 		this.jeuPoker.ajouteMessage("Le Turn devient visible");
 		this.jeuPoker.getTurn().setVisible(true);
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 
 	@Override
 	public void voirRiver() {
 		this.jeuPoker.ajouteMessage("Le River devient visible");
 		this.jeuPoker.getRiver().setVisible(true);
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void recommencerPartie(String joueur) {
@@ -140,7 +162,7 @@ public class PokerApplication implements IPokerApplication {
 		this.jeuPoker.ajouteMessage("Nouvelle Partie");
 		this.jeuPoker.nextDonneur();
 		distributionCartes();
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void miserSimpleBlind(String joueur) {
@@ -160,7 +182,7 @@ public class PokerApplication implements IPokerApplication {
 			e.printStackTrace();
 		}
 		this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " a misé " + nbjetons + " jeton(s)");
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void faireTapis(String joueur) {
@@ -170,14 +192,14 @@ public class PokerApplication implements IPokerApplication {
 	@Override
 	public void passer(String joueur) {
 		this.jeuPoker.ajouteMessage("Le joueur " + joueur + " a passé son tour");
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void abandonner(String joueur) {
 		Joueur j = this.jeuPoker.getJoueur(joueur);
 		j.setAbandon(true);
 		this.jeuPoker.ajouteMessage("Le joueur " + j.getNom() + " vient d'abandonner");
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 	@Override
 	public void prendrePot(String joueur) {
@@ -200,6 +222,6 @@ public class PokerApplication implements IPokerApplication {
 		} catch (JeuPokerException e) {
 			e.printStackTrace();
 		}
-		this.jeuPoker.notifyIHM();
+		observable.notifyIHM(this.jeuPoker);
 	}
 }

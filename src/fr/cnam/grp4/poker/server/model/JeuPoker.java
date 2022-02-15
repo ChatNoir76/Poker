@@ -1,19 +1,17 @@
 package fr.cnam.grp4.poker.server.model;
 
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.Optional;
 
-import fr.cnam.grp4.poker.server.communication.ClientObserver;
 import fr.cnam.grp4.poker.server.service.JeuPokerException;
 
-@SuppressWarnings("deprecation")
-public class JeuPoker extends Observable{
+public class JeuPoker implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final static int[] FLOP_INDEX = {0, 1, 2};
 	private final static int TURN_INDEX = 3;
 	private final static int RIVER_INDEX = 4;
@@ -44,18 +42,17 @@ public class JeuPoker extends Observable{
 	
 	private ArrayList<String> messages;
 	
-	private JeuPoker(int blind, int port) {
+	private JeuPoker(int blind) {
 		this.messages = new ArrayList<String>();
 		this.joueurs = new ArrayList<Joueur>();
 		this.indexDonneur = NO_PLAYER;
 		this.blind = blind;
 		this.cartes = new Carte[INDEX_LIST_SIZE];
 		this.pot = 0;
-		this.startServer(port);
 		ajouteMessage("Bonjour à tous et bienvenue");
 	}
-	public JeuPoker(int port) {
-		this(5, port);
+	public JeuPoker() {
+		this(5);
 	}
 	/**
 	 * Reset les paramètres de la manche terminée afin d'un commencer une autre
@@ -93,13 +90,6 @@ public class JeuPoker extends Observable{
 	public void ajouteMessage(String message) {
 		System.out.println(message);
 		this.messages.add(0, message);
-	}
-	/**
-	 * indique les changements aux observeurs
-	 */
-	public void notifyIHM() {
-		this.setChanged();
-		this.notifyObservers(this);
 	}
 	
 	public void nextDonneur() {
@@ -194,30 +184,4 @@ public class JeuPoker extends Observable{
 		this.cartes[RIVER_INDEX] = carte;
 	}
 	
-	public void startServer(int port)
-	  {
-	    // Execution d'un thread sur un serveur de socket pour attendre les abonnements
-	    //  des clients
-	    try{
-	      ServerSocket sos = new ServerSocket(port);
-	      Thread t = new Thread(){
-	          public void run(){
-	            while(true){
-	              try{
-	            	System.out.println("Serveur en attente de joueur");
-	                Socket soc = sos.accept();
-	                InputStream is=soc.getInputStream();
-	                ObjectInputStream ois=new ObjectInputStream(is);
-	                String hostNameClient  = (String)(ois.readObject());
-	                Integer portClient = (Integer)(ois.readObject());
-
-	                // Abonnement recu : cr�ation d'un observer d�di� au client
-	                addObserver(new ClientObserver(hostNameClient,portClient.intValue()));
-	                System.out.println("Abonnement du client fait : "+hostNameClient+" "+portClient);
-	                soc.close();
-	              }catch(Exception ex){System.out.println(ex);ex.printStackTrace();}
-	            }}};
-	      t.start();
-	    }catch(Exception ex){};
-	  }
 }

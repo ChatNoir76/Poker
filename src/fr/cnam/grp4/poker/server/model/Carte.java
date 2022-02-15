@@ -1,6 +1,12 @@
 package fr.cnam.grp4.poker.server.model;
 
-public class Carte extends AbstractCarte {
+import java.io.Serializable;
+
+public class Carte extends AbstractCarte implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Détermine la couleur de la carte Pique, Trèfle, Carreau, Coeur
 	 */
@@ -27,9 +33,9 @@ public class Carte extends AbstractCarte {
 	public Carte(Couleur couleur, int valeur) {
 		this.couleur = couleur;
 		this.valeur = valeur;
-		this.nom = this.findNameFromValeur(valeur + 1);
+		this.nom = this.findNameFromValeur(valeur);
 		this.visible = false;
-		this.lienImageFace = this.getLienCarteStandard(couleur.getSymbole(), valeur + 1 + 1);
+		this.lienImageFace = this.getLienCarteStandard(couleur.getSymbole(), this.valeur);
 	}
 
 	public void setVisible(boolean visible) {

@@ -1,8 +1,14 @@
 package fr.cnam.grp4.poker.server.model;
 
+import java.io.Serializable;
+
 import fr.cnam.grp4.poker.server.service.JeuPokerException;
 
-public class Joueur {
+public class Joueur implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Contient le nom du joueur
 	 */

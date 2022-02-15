@@ -13,7 +13,7 @@ public class ClientObserver implements Observer {
 	private String hostNameClient;
 	private int portClient;
 	
-	public ClientObserver(String hostNameClient, int portClient) {
+	public ClientObserver(String hostNameClient, int portClient, String pseudo) {
 		super();
 		this.hostNameClient = hostNameClient;
 		this.portClient = portClient;

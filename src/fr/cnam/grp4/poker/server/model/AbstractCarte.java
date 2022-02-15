@@ -1,10 +1,17 @@
 package fr.cnam.grp4.poker.server.model;
+
+import java.io.Serializable;
+
 /**
  * Classe abstraite qui définie une Carte
  * @author chatnoir
  *
  */
-public abstract class AbstractCarte implements ICarte {
+public abstract class AbstractCarte implements ICarte, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Contient le lien de l'image de la face caché de la carte
 	 */
@@ -41,6 +48,7 @@ public abstract class AbstractCarte implements ICarte {
 	 * @return Nom de la carte
 	 */
 	protected String findNameFromValeur(int valeur) {
+		if(valeur > 13) System.out.println("CARTE A SUP 13");
 		if(valeur == 1) return "As";
 		if(valeur == 11) return "Valet";
 		if(valeur == 13) return "Roi";
