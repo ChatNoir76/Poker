@@ -1,0 +1,118 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text></help_text><element><id>Relation</id><coordinates><x>1480</x><y>270</y><w>120</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+group=1</panel_attributes><additional_attributes>10;50;10;10;100;10;100;100;60;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1260</x><y>320</y><w>280</w><h>140</h></coordinates><panel_attributes>CarteFactory
+--
+-distributeur: Carte[]
+--
+/+prendreCarte(): Carte/
+/+recupereCartes(Carte[] cartes): void/
+/+coupe(): void/
+group=1</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1300</x><y>540</y><w>210</w><h>150</h></coordinates><panel_attributes>Carte
+--
+-couleur: string
+-valeur: integer
+-nom: string
+-visible: boolean
+-lienImageFace: string
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>160</x><y>420</y><w>210</w><h>120</h></coordinates><panel_attributes>IHMJoueur
+--
+
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>370</y><w>210</w><h>120</h></coordinates><panel_attributes>PokerApplication
+--
+-jeuPoker: JeuPoker
+-sabot: CarteFactory
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1390</x><y>450</y><w>90</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=*
+distributeur</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLInterface</id><coordinates><x>970</x><y>670</y><w>140</w><h>180</h></coordinates><panel_attributes>ICarte
+--
+/+getCouleur(): string/
+/+getValeur(): integer/
+/+getNom(): string/
+/+estVisible(): boolean/
+/+getLienFace(): string/
+/+getLienDos(): string/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1120</x><y>760</y><w>200</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;180;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>480</y><w>30</w><h>220</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>1140</x><y>390</y><w>140</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+sabot</panel_attributes><additional_attributes>10;20;120;20</additional_attributes></element><element><id>UMLInterface</id><coordinates><x>300</x><y>160</y><w>100</w><h>90</h></coordinates><panel_attributes>Observer
+--
+/+update(): void/</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>260</x><y>240</y><w>1840</w><h>200</h></coordinates><panel_attributes>&lt;diagram program="umletino" version="14.4.0-SNAPSHOT"&gt;&lt;zoom_level&gt;10&lt;/zoom_level&gt;&lt;element&gt;&lt;id&gt;Relation&lt;/id&gt;&lt;coordinates&gt;&lt;x&gt;250&lt;/x&gt;&lt;y&gt;240&lt;/y&gt;&lt;w&gt;110&lt;/w&gt;&lt;h&gt;200&lt;/h&gt;&lt;/coordinates&gt;&lt;panel_attributes&gt;lt=&amp;lt;&amp;lt;.&lt;/panel_attributes&gt;&lt;additional_attributes&gt;90;10;10;180&lt;/additional_attributes&gt;&lt;/element&gt;&lt;/diagram&gt;lt=&lt;&lt;.</panel_attributes><additional_attributes>90;10;10;180</additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>40</y><w>270</w><h>80</h></coordinates><panel_attributes>Observable
+--
+-observers: Observer[]
+--
+/addObserver(Observer obj): void/
+/notifier(): void/
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>180</y><w>270</w><h>80</h></coordinates><panel_attributes>ObservableApp
+--
+
+--
+/+update(): void/
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>370</x><y>70</y><w>280</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>260;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>680</x><y>110</y><w>100</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>80;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>690</x><y>250</y><w>30</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1330</x><y>0</y><w>210</w><h>110</h></coordinates><panel_attributes>Joueur
+--
+-cartes: Carte[2]
+-jetons: int
+-miseManche: int
+-donneur: boolean
+--
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>920</x><y>0</y><w>300</w><h>170</h></coordinates><panel_attributes>JeuPoker
+--
+-cartes: Carte[5]
+-joueurs: Joueur[]
+-pot: int
+-blind: int
+--
+/+setFlop(Carte[3]): Void/
+/+setTurn(Carte carteTurn): void/
+/+setRiver(Carte carteRiver): void/
+/+getCartes(int id): Carte[]/
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1300</x><y>730</y><w>210</w><h>80</h></coordinates><panel_attributes>AbstractCarte
+--
+-lienImageDos: string
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1390</x><y>680</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLInterface</id><coordinates><x>570</x><y>370</y><w>260</w><h>270</h></coordinates><panel_attributes>IPokerApplication
+--
+/+recommencerPartie(String joueur): void/
+/+definirBlind(int nbJeton): void/
+/+miserSimpleBlind(String joueur): void/
+/+miserDoubleBlind(String joueur): void/
+/+miserJetons(String joueur, int nbJeton): void/
+/+faireTapis(String joueur): void/
+/+passer(String joueur): void/
+/+abandonner(String joueur): void/
+/+prendrePot(String joueur): void/
+/+voirFlop(): void/
+/+voirTurn(): void/
+/+voirRiver(): void/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>830</x><y>400</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>160</y><w>80</w><h>230</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+jeuPoker</panel_attributes><additional_attributes>10;210;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1210</x><y>70</y><w>140</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=*</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>480</y><w>200</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=*</panel_attributes><additional_attributes>10;10;180;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>20</x><y>570</y><w>270</w><h>80</h></coordinates><panel_attributes>Observable
+--
+-observers: Observer[]
+--
+/addObserver(Observer obj): void/
+/notifier(): void/
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>190</x><y>705</y><w>210</w><h>60</h></coordinates><panel_attributes>RequeteIHM
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLInterface</id><coordinates><x>550</x><y>673</y><w>160</w><h>120</h></coordinates><panel_attributes>IRequeteIHM
+--
+/+getOperation: Operation/
+/+getPseudo: String/
+/+getJetons: Integer/</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>390</x><y>723</y><w>180</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>160;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>150</y><w>210</w><h>120</h></coordinates><panel_attributes>IHMClientApplication
+--
+/+open: void/
+/+notifierCore: void/
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>
