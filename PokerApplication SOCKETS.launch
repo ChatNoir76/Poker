@@ -11,6 +11,6 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="fr.cnam.grp4.poker.server.PokerApplication"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="poker"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="David Goliath Romeo"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="9100 45"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Poker"/>
 </launchConfiguration>

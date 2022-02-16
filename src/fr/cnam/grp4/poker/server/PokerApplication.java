@@ -1,8 +1,9 @@
 package fr.cnam.grp4.poker.server;
 
-import fr.cnam.grp4.poker.client.communication.JeuPokerObserver;
+import java.util.Date;
+
 import fr.cnam.grp4.poker.server.communication.ClientObserver;
-import fr.cnam.grp4.poker.server.communication.ObservableApplication;
+import fr.cnam.grp4.poker.server.communication.ObservableApp;
 import fr.cnam.grp4.poker.server.model.Carte;
 import fr.cnam.grp4.poker.server.model.CarteFactory;
 import fr.cnam.grp4.poker.server.model.JeuPoker;
@@ -10,19 +11,16 @@ import fr.cnam.grp4.poker.server.model.Joueur;
 import fr.cnam.grp4.poker.server.service.JeuPokerException;
 
 public class PokerApplication implements IPokerApplication {
-
-	public static final String VERSION_LOCALE = "LOCALE";
 	
 	public static void main(String[] args) {
-		
-		if(args[0].equals(VERSION_LOCALE)) {
-			System.out.println("Version Locale...");
-			for(int j=1;j<args.length;j++) {
-				PokerApplication.getLocalInstance().ajouteJoueur(new JeuPokerObserver(args[j]));
-			}
-			PokerApplication.getLocalInstance().startLocaleApplication();
-		}else {
-			System.out.println("Version Sockets...");
+
+		try {
+			int port = Integer.valueOf(args[0]);
+			int time = Integer.valueOf(args[1]);
+			System.out.println("Attente autre joueurs pendant [" + time + "] secondes");
+			PokerApplication.getLocalInstance().startServer(port, time);
+		}catch(NumberFormatException ex) {
+			System.err.println("Format de l'argument incorrect : attendu integer (port)");
 		}
 	}
 	/**
@@ -45,7 +43,7 @@ public class PokerApplication implements IPokerApplication {
 		if(instance == null) instance = new PokerApplication();
 		return instance;
 	}
-	private ObservableApplication observable;
+	private ObservableApp observable;
 	/**
 	 * Jeu de poker
 	 */
@@ -55,19 +53,26 @@ public class PokerApplication implements IPokerApplication {
 	 */
 	private PokerApplication() {
 		this.jeuPoker = new JeuPoker();
-		this.observable = new ObservableApplication();
+		
+		this.observable = new ObservableApp();
 	}
 	
-	public void startLocaleApplication() {
-		this.jeuPoker.nextDonneur();
-		distributionCartes();
+	@SuppressWarnings("deprecation")
+	public void startServer(int port, int time) {
+		long start = System.currentTimeMillis() + (time * 1000);
+		Date d = new Date(start);
+		this.jeuPoker.ajouteMessage("Le jeu commencera à " + d.getHours() + "h " + d.getMinutes() + "min " + d.getSeconds() + "s");
+		this.observable.setConfigServer(port, time);
+		Thread t = new Thread(observable);
+		t.start();
 	}
 	
 	public void startApplication() {
-		while(!this.observable.isReady()) {
-			
-		}
-		this.startLocaleApplication();
+		this.jeuPoker.resetMessages();
+		this.jeuPoker.ajouteMessage("Merci d'avoir attendu, c'est parti !!!");
+		this.jeuPoker.clearManche();
+		this.jeuPoker.nextDonneur();
+		distributionCartes();
 	}
 	/**
 	 * 
@@ -110,20 +115,13 @@ public class PokerApplication implements IPokerApplication {
 			CarteFactory.eInstance().remettreCartes(j.getCartes());
 		}
 	}
-	/**
-	 * 
-	 * @param ihm
-	 */
 	@SuppressWarnings("deprecation")
-	public void ajouteJoueur(JeuPokerObserver ihm) {
-		this.observable.addObserver(ihm);
-		this.jeuPoker.ajouteJoueur(new Joueur(ihm.getPseudo()));
-		this.jeuPoker.ajouteMessage("Nouveau joueur: " + ihm.getPseudo());
-	}
 	public void ajouteJoueurViaClient(String hostNameClient, int portClient, String pseudo) {
 		ClientObserver monJoueur = new ClientObserver(hostNameClient, portClient, pseudo);
 		this.observable.addObserver(monJoueur);
-		this.jeuPoker.ajouteJoueur(new Joueur(pseudo));
+		Joueur j = new Joueur(pseudo);
+		j.setAbandon(true);
+		this.jeuPoker.ajouteJoueur(j);
 		this.jeuPoker.ajouteMessage("Nouveau joueur: " + pseudo);
 		observable.notifyIHM(this.jeuPoker);
 	}

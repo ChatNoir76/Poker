@@ -6,7 +6,11 @@ import java.net.Inet4Address;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
-
+/**
+ * 
+ * @author antitrust
+ *
+ */
 @SuppressWarnings("deprecation")
 public class ClientObserver implements Observer {
 
@@ -22,8 +26,6 @@ public class ClientObserver implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		try{
-	        // La notification consiste � �crire l'objet � notifier sur le socket du poste client
-	        //
 	        Socket soc = new Socket(Inet4Address.getByName(hostNameClient),portClient);
 	        OutputStream os=soc.getOutputStream();
 	        ObjectOutputStream oos=new ObjectOutputStream(os);

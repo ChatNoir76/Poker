@@ -1,16 +1,21 @@
 package fr.cnam.grp4.poker.client.view;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JLabel;
 
-import fr.cnam.grp4.poker.server.PokerApplication;
+import fr.cnam.grp4.poker.client.communication.RequeteIHM;
+import fr.cnam.grp4.poker.commun.Operation;
 import fr.cnam.grp4.poker.server.model.JeuPoker;
 import fr.cnam.grp4.poker.server.model.Joueur;
 import fr.cnam.ihm.Formulaire;
 import fr.cnam.ihm.FormulaireInt;
 
-public class IHMJoueur implements FormulaireInt {
+@SuppressWarnings("deprecation")
+public class IHMJoueur implements Observer, FormulaireInt {
 	
 	private static final String BT_MISER_SIMPLE = "BT_MISERS";
 	private static final String BT_MISER_DOUBLE = "BT_MISERD";
@@ -51,7 +56,10 @@ public class IHMJoueur implements FormulaireInt {
 	private JLabel carteTurn;
 	private JLabel carteRiver;
 	
-	public IHMJoueur(String pseudo) {
+	private ObjectOutputStream dos;
+	
+	public IHMJoueur(String pseudo, ObjectOutputStream dos) {
+		this.dos = dos;
 		this.pseudo = pseudo;
 		this.joue = true;
 		this.elimination = false;
@@ -158,11 +166,27 @@ public class IHMJoueur implements FormulaireInt {
 		}
 		this.vue.setValeurChamp(TXT_INFORMATION, str.toString());
 	}
+	
+	private void ajouteMessage(String message) {
+		StringBuilder currentMessage = new StringBuilder(message);
+		currentMessage.append(this.vue.getValeurChamp(TXT_INFORMATION)).append('\n');
+		this.vue.setValeurChamp(TXT_INFORMATION, currentMessage.toString());
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		if(arg instanceof JeuPoker) {
+			updateIHM((JeuPoker) arg);
+		} else {
+			System.out.println("Objet inconnu reçu par l'ihm");
+		}
+	}
+	
 	/**
 	 * Mise à jour de l'ihm
 	 * @param jeu
 	 */
-	public void update(JeuPoker jeu) {
+	public void updateIHM(JeuPoker jeu) {
 		
 		afficheMessages(jeu.getMessages());
 		
@@ -184,59 +208,73 @@ public class IHMJoueur implements FormulaireInt {
 		this.vue.setValeurChamp(TXT_MISECUMUL_JOUEUR, String.valueOf(me.getMiseManche()));
 		
 		//affichage des cartes du joueur
-		this.vue.setImage(carte1, me.getCartes()[0].getLienFace());
-		this.vue.setImage(carte2, me.getCartes()[1].getLienFace());
+		if(me.getCartes()[0] != null) {
+			this.vue.setImage(carte1, me.getCartes()[0].getLienFace());
+			this.vue.setImage(carte2, me.getCartes()[1].getLienFace());
+		}
 		
 		//affichage des cartes du plateau
-		this.vue.setImage(carteFlop1, jeu.getFlop()[0].estVisible() ? jeu.getFlop()[0].getLienFace() : jeu.getFlop()[0].getLienDos());
-		this.vue.setImage(carteFlop2, jeu.getFlop()[1].estVisible() ? jeu.getFlop()[1].getLienFace() : jeu.getFlop()[1].getLienDos());
-		this.vue.setImage(carteFlop3, jeu.getFlop()[2].estVisible() ? jeu.getFlop()[2].getLienFace() : jeu.getFlop()[2].getLienDos());
-		this.vue.setImage(carteTurn, jeu.getTurn().estVisible() ? jeu.getTurn().getLienFace() : jeu.getTurn().getLienDos());
-		this.vue.setImage(carteRiver, jeu.getRiver().estVisible() ? jeu.getRiver().getLienFace() : jeu.getRiver().getLienDos());
+		if(jeu.getFlop()[0] != null) {
+			this.vue.setImage(carteFlop1, jeu.getFlop()[0].estVisible() ? jeu.getFlop()[0].getLienFace() : jeu.getFlop()[0].getLienDos());
+			this.vue.setImage(carteFlop2, jeu.getFlop()[1].estVisible() ? jeu.getFlop()[1].getLienFace() : jeu.getFlop()[1].getLienDos());
+			this.vue.setImage(carteFlop3, jeu.getFlop()[2].estVisible() ? jeu.getFlop()[2].getLienFace() : jeu.getFlop()[2].getLienDos());
+			this.vue.setImage(carteTurn, jeu.getTurn().estVisible() ? jeu.getTurn().getLienFace() : jeu.getTurn().getLienDos());
+			this.vue.setImage(carteRiver, jeu.getRiver().estVisible() ? jeu.getRiver().getLienFace() : jeu.getRiver().getLienDos());
+		}
 		
 	}
 
 	@Override
 	public void submit(Formulaire form, String nom) {
 		if(this.joue && !this.elimination) {
+			RequeteIHM obj = null;
 			switch(nom) {
 			case BT_MISER:
-				PokerApplication.eInstance().miserJetons(this.pseudo, Integer.valueOf(form.getValeurChamp(TXT_MISER)));
+				int jetons = Integer.valueOf(form.getValeurChamp(TXT_MISER));
 				form.setValeurChamp(TXT_MISER, "0");
+				obj = new RequeteIHM(Operation.miserJetons, this.pseudo, jetons);
 				break;
 			case BT_MISER_SIMPLE:
-				PokerApplication.eInstance().miserSimpleBlind(this.pseudo);
+				obj = new RequeteIHM(Operation.miserSimpleBlind, this.pseudo, null);
 				break;
 			case BT_MISER_DOUBLE:
-				PokerApplication.eInstance().miserDoubleBlind(this.pseudo);
+				obj = new RequeteIHM(Operation.miserDoubleBlind, this.pseudo, null);
 				break;
 			case BT_FLOP:
-				PokerApplication.eInstance().voirFlop();
+				obj = new RequeteIHM(Operation.voirFlop, this.pseudo, null);
 				break;
 			case BT_TURN:
-				PokerApplication.eInstance().voirTurn();
+				obj = new RequeteIHM(Operation.voirTurn, this.pseudo, null);
 				break;
 			case BT_RIVER:
-				PokerApplication.eInstance().voirRiver();
+				obj = new RequeteIHM(Operation.voirRiver, this.pseudo, null);
 				break;
 			case BT_ABANDONNER:
-				PokerApplication.eInstance().abandonner(this.pseudo);
+				obj = new RequeteIHM(Operation.abandonner, this.pseudo, null);
 				break;
 			case BT_PASSER:
-				PokerApplication.eInstance().passer(this.pseudo);
+				obj = new RequeteIHM(Operation.passer, this.pseudo, null);
 				break;
 			case BT_RECOMMENCER:
-				PokerApplication.eInstance().recommencerPartie(this.pseudo);
+				obj = new RequeteIHM(Operation.recommencer, this.pseudo, null);
 				break;
 			case BT_PRENDREPOT:
-				PokerApplication.eInstance().prendrePot(this.pseudo);
+				obj = new RequeteIHM(Operation.prendrePot, this.pseudo, null);
 				break;
 			case BT_BLIND:
-				PokerApplication.eInstance().definirBlind(Integer.valueOf(form.getValeurChamp(TXT_BLIND)));
+				obj = new RequeteIHM(Operation.definirBlind, this.pseudo, Integer.valueOf(form.getValeurChamp(TXT_BLIND)));
 				form.setValeurChamp(TXT_BLIND, "0");
 				break;
 			default:
+				ajouteMessage("Désolé, cette fonction n'est pas disponible");
 				break;
+			}
+			
+			try {
+				this.dos.writeObject(obj);
+			} catch (IOException e) {
+				ajouteMessage("Une erreur sur l'ihm c'est produite");
+				ajouteMessage(e.getMessage());
 			}
 		}
 	}
